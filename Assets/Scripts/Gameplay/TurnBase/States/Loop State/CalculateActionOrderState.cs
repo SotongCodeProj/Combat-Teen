@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using CombTeen.Gameplay.Unit.Action;
 using CombTeen.Gameplay.Unit;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CombTeen.Gameplay.State
 {
@@ -21,7 +20,6 @@ namespace CombTeen.Gameplay.State
 
         protected override UniTask PostState()
         {
-            // _testUnitState.Clear();
             return UniTask.Delay(500);
         }
 
@@ -33,7 +31,7 @@ namespace CombTeen.Gameplay.State
 
         protected override UniTask ProcessState()
         {
-            Debug.Log($"Its {StateId} state");
+            UILogger.Instance.LogMain($"Its {StateId} state");
             return UniTask.Delay(500);
         }
 

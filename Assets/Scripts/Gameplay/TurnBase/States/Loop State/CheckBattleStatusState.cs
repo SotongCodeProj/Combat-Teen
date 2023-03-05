@@ -1,6 +1,4 @@
 using Cysharp.Threading.Tasks;
-using TBS.Core;
-using UnityEngine;
 
 namespace CombTeen.Gameplay.State
 {
@@ -21,7 +19,7 @@ namespace CombTeen.Gameplay.State
 
         protected override UniTask ProcessState()
         {
-            Debug.Log($"Its {StateId} state");
+            UILogger.Instance.LogMain($"Its {StateId} state");
             return UniTask.Delay(500);
         }
     }

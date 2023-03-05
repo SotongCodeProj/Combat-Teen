@@ -32,12 +32,10 @@ public class TestRunner : MonoBehaviour
     {
         for (int i = 0; i < _playerUnits.Count; i++)
         {
-            Debug.Log(_playerUnits[i].UnitId);
             _playerUnits[i].InitialUnitData(_testData.PlayersData[i]);
         }
         for (int i = 0; i < _enemyUnits.Count; i++)
         {
-            Debug.Log(_enemyUnits[i].UnitId);
             _enemyUnits[i].InitialUnitData(_testData.EnemysData[i]);
         }
     }

@@ -1,19 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61282f85ebcbc486db96b8a63f60df7e, type: 3}
-  m_Name: TBS_BasicModel
-  m_EditorClassIdentifier: 
-  startBattle: {fileID: 11400000, guid: a8bfb5eb5f4134b6ca8bd7d1022fb252, type: 2}
-  unitTurnSquences:
-  - {fileID: 11400000, guid: b4b8b9c9f2a6c44c69fb50e57510b571, type: 2}
-  - {fileID: 11400000, guid: 492ff06b4700f47158297f548ede2876, type: 2}
-  endBattle: {fileID: 11400000, guid: 89acb127525544798907f04af2654dab, type: 2}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f74216a1562223ea11970615072d983485b5c995740dc783ad2c31aad944ae33
+size 731

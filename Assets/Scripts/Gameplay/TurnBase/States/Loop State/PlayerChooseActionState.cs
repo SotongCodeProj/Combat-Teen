@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using CombTeen.Gameplay.Unit;
 using CombTeen.Gameplay.Unit.MVC;
+using CombTeen.Gameplay.Screen.ActionPanel;
 
 namespace CombTeen.Gameplay.State
 {
@@ -10,11 +11,14 @@ namespace CombTeen.Gameplay.State
     {
         private IReadOnlyList<BasePlayerUnit> _players;
         private IReadOnlyList<BaseEnemyUnit> _enemys;
+        private IActionPanelControl _actionPanel;
 
-        public PlayerChooseActionState(IReadOnlyList<BasePlayerUnit> players, IReadOnlyList<BaseEnemyUnit> enemys)
+        public PlayerChooseActionState(IReadOnlyList<BasePlayerUnit> players, IReadOnlyList<BaseEnemyUnit> enemys,
+        IActionPanelControl actionPanel)
         {
             _players = players;
             _enemys = enemys;
+            _actionPanel = actionPanel;
         }
 
         public override string StateId => "chooseAction";
@@ -27,19 +31,21 @@ namespace CombTeen.Gameplay.State
         {
             return UniTask.Delay(500);
         }
-        protected override UniTask ProcessState()
+        protected override async UniTask ProcessState()
         {
-            Debug.Log($"Its {StateId} state");
-            
+            UILogger.Instance.LogMain($"Its {StateId} state");
+
             for (int i = 0; i < _players.Count; i++)
             {
-                SetUnitAction(_players[i]);
+                _actionPanel.InitUnitHandledUnit(_players[i]);
+                await UniTask.WaitUntil(_actionPanel.IsChooseDone);
             }
             for (int i = 0; i < _enemys.Count; i++)
             {
-                SetUnitAction(_enemys[i]);
+                _actionPanel.InitUnitHandledUnit(_enemys[i]);
+                await UniTask.WaitUntil(_actionPanel.IsChooseDone);
             }
-            return UniTask.Delay(500);
+            await UniTask.Delay(500);
         }
 
         private void SetUnitAction(CombatUnitControl unit)

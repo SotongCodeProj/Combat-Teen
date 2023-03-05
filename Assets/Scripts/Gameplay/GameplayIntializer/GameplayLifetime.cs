@@ -1,7 +1,7 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CombTeen.Gameplay.Screen.ActionPanel;
 using CombTeen.Gameplay.Unit.MVC;
 using UnityEngine;
 using VContainer;
@@ -9,11 +9,17 @@ using VContainer.Unity;
 
 public class GameplayLifetime : LifetimeScope
 {
+    [Header("General")]
     [SerializeField] private UnityEditor.MonoScript[] _pureScripts;
+    [SerializeField] private MonoBehaviour[] _monobehavScripts;
 
+    [Header("Turn Base")]
     [SerializeField] private GameplayTurnBaseComponent _turnBaseComponents;
     [SerializeField] private Units _playerUnits;
     [SerializeField] private Units _enemyUnits;
+
+    [SerializeField] private HUDComponent _hudComponent;
+
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -21,10 +27,16 @@ public class GameplayLifetime : LifetimeScope
         {
             builder.Register(_pureScripts[i].GetClass(), Lifetime.Scoped);
         }
+        for (int i = 0; i < _monobehavScripts.Length; i++)
+        {
+            builder.Register(_monobehavScripts.GetType(),Lifetime.Scoped);
+        }
 
         RegisterTurnBasedComponents(builder);
         RegisterPlayerUnits(builder);
         RegisterEnemyUnits(builder);
+        RegisterHUDComponent(builder);
+
     }
 
     private void RegisterTurnBasedComponents(IContainerBuilder builder)
@@ -50,6 +62,7 @@ public class GameplayLifetime : LifetimeScope
             }
         }
     }
+
     private void RegisterPlayerUnits(IContainerBuilder builder)
     {
         var controller = _playerUnits.bridgeController.GetClass();
@@ -82,6 +95,11 @@ public class GameplayLifetime : LifetimeScope
         .As(readonlyList);
     }
 
+    private void RegisterHUDComponent(IContainerBuilder builder)
+    {
+        builder.RegisterComponent<ActionPanelView>(_hudComponent.ActionPanelView).AsImplementedInterfaces();
+        builder.Register(_hudComponent.ActionPanelControl.GetClass(), Lifetime.Scoped).AsImplementedInterfaces();
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -108,6 +126,13 @@ public class GameplayLifetime : LifetimeScope
     {
         public UnityEditor.MonoScript bridgeController;
         public CombatUnitView[] unitView;
+    }
+
+    [System.Serializable]
+    public struct HUDComponent
+    {
+        public UnityEditor.MonoScript ActionPanelControl;
+        public ActionPanelView ActionPanelView;
     }
 
 }

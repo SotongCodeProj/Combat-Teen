@@ -12,7 +12,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask PreState()
         {
-            Debug.Log($"Pre-State of {ActionId} from {Owner.Data.UnitName}");
+            UILogger.Instance.LogSub($"Pre-State of {ActionId} from {Owner.Data.UnitName}");
             return UniTask.CompletedTask;
         }
         protected override UniTask PostState()
@@ -22,7 +22,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            Debug.Log($"{ActionId} will do Support action from {Owner.Data.UnitName}");
+            UILogger.Instance.LogSub($"{ActionId} will do Support action from {Owner.Data.UnitName}",true);
             return UniTask.Delay(500);
         }
 

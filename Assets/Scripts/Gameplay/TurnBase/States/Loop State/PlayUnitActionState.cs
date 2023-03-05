@@ -1,6 +1,5 @@
 using CombTeen.Gameplay.Unit.Action;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CombTeen.Gameplay.State
 {
@@ -15,7 +14,7 @@ namespace CombTeen.Gameplay.State
 
         protected override async UniTask PreState()
         {
-            Debug.Log($"Its Pre-{StateId} state");
+            UILogger.Instance.LogMain($"Its Pre-{StateId} state");
             await UniTask.Delay(500);
         }
 
