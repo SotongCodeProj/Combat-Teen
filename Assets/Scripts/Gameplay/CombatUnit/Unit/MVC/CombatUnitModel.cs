@@ -50,6 +50,7 @@ namespace CombTeen.Gameplay.Unit.MVC
                 basicStat.Speed,
                 basicStat.Ap
             );
+            DynamicUnitStatus = new DynamicUnitStat();
 
             FinalStatus = new FinalUniStat(BaseUnitSatus, DynamicUnitStatus);
         }

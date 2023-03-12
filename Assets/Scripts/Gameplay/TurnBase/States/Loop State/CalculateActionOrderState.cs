@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CombTeen.Gameplay.Unit.Action;
 using CombTeen.Gameplay.Unit;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 namespace CombTeen.Gameplay.State
 {
@@ -42,21 +43,16 @@ namespace CombTeen.Gameplay.State
 
         private void CalculateOrder()
         {
-            var players = _unitHandler.GetPlayerUnits();
-            var enemys = _unitHandler.GetEnemyUnits();
+            var actionUnits = _unitHandler.GetAllUnits();
 
             _actionOrderResult.Clear();
 
-            int indexData = 0;
-            for (int i = 0; i < players.Length + enemys.Length; i++)
+            var SortedList = actionUnits.OrderByDescending(unit => unit.Data.FinalStatus.Speed).ToList();
+            for (int i = 0; i < SortedList.Count; i++)
             {
-                bool odd = i % 2 == 0;
-                _actionOrderResult.Add(odd ?
-                players[indexData].Data.UsedAction :
-                enemys[indexData].Data.UsedAction);
-
-                if (!odd) indexData++;
+                _actionOrderResult.Add(SortedList[i].Data.UsedAction);
             }
+
         }
 
     }

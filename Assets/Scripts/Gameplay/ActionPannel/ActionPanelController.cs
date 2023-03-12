@@ -1,3 +1,4 @@
+using CombTeen.Gameplay.Unit;
 using CombTeen.Gameplay.Unit.MVC;
 using VContainer.Unity;
 
@@ -12,11 +13,15 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
     {
         private IActionPanelView _view;
         private CombatUnitControl _currentUnit;
+        private CombatUnitsHandler _unitsHandler;
 
         private bool _isChooseDone = false;
-        public ActionPanelController(IActionPanelView view)
+        public ActionPanelController(IActionPanelView view,
+                                     CombatUnitsHandler combatUnitHandler
+                                    )
         {
             _view = view;
+            _unitsHandler = combatUnitHandler;
         }
         public void Start()
         {
@@ -35,7 +40,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private void SetAttackAction()
         {
             _currentUnit.Data.SetAction(_currentUnit.Data.AttackAction)
-            .SetUnitTargets(_currentUnit);
+            .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
             _isChooseDone = true;
         }
         private void SetDefenseAction()
@@ -52,7 +57,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private void SetSkillAction(int indexSlot)
         {
             _currentUnit.Data.SetAction(_currentUnit.Data.SkillActions[indexSlot])
-            .SetUnitTargets(_currentUnit);
+            .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
 
             _isChooseDone = true;
         }

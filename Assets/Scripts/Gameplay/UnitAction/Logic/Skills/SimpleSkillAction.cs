@@ -11,7 +11,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask PreState()
         {
-            UILogger.Instance.LogSub($"Pre-State of {ActionId} from {Owner.Data.UnitName}");
             return UniTask.CompletedTask;
         }
         protected override UniTask PostState()
@@ -21,8 +20,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{ActionId} will do Skill Action from {Owner.Data.UnitName}", true);
-            UILogger.Instance.LogSub($"{TargetUnits.Data.UnitName} Take Damage from Skill");
+            UILogger.Instance.LogSub($"{Owner.Data.UnitName} Deal Damge using Simple Skill to {TargetUnits.Data.UnitName}",true);
             return UniTask.Delay(500);
         }
 

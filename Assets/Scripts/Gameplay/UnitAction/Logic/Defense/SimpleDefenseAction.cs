@@ -12,7 +12,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask PreState()
         {
-            UILogger.Instance.LogSub($"Pre-State of {ActionId} from {Owner.Data.UnitName}");
             return UniTask.CompletedTask;
         }
         protected override UniTask PostState()
