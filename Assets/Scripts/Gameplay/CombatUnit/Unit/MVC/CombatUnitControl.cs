@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using CombTeen.Gameplay.DataTransport.TestData;
 using CombTeen.Gameplay.Unit.Action.Logic;
-using UnityEngine;
 namespace CombTeen.Gameplay.Unit.MVC
 {
     public abstract class CombatUnitControl
@@ -21,10 +20,12 @@ namespace CombTeen.Gameplay.Unit.MVC
                 skills.Add(Character.SkillsAction[i].Logic.InitializeOwner(this));
             }
 
-            Data.Initialize(Character.AttackAction.Logic.InitializeOwner(this),
+            Data.InitializeAction(Character.AttackAction.Logic.InitializeOwner(this),
                             Character.DefenseAction.Logic.InitializeOwner(this),
                             Character.SupportAction.Logic.InitializeOwner(this),
                             skills.ToArray());
+
+            Data.InitializeStat(Character.BasicStatus);
         }
     }
 }

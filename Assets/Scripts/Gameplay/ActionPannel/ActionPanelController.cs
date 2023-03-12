@@ -1,12 +1,10 @@
 using CombTeen.Gameplay.Unit.MVC;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace CombTeen.Gameplay.Screen.ActionPanel
 {
     public interface IActionPanelControl
     {
-
         public void InitUnitHandledUnit(CombatUnitControl selectedUnit);
         public bool IsChooseDone();
     }
@@ -36,7 +34,8 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
 
         private void SetAttackAction()
         {
-            _currentUnit.Data.SetAction(_currentUnit.Data.AttackAction);
+            _currentUnit.Data.SetAction(_currentUnit.Data.AttackAction)
+            .SetUnitTargets(_currentUnit);
             _isChooseDone = true;
         }
         private void SetDefenseAction()
@@ -52,7 +51,9 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
 
         private void SetSkillAction(int indexSlot)
         {
-            _currentUnit.Data.SetAction(_currentUnit.Data.SkillActions[indexSlot]);
+            _currentUnit.Data.SetAction(_currentUnit.Data.SkillActions[indexSlot])
+            .SetUnitTargets(_currentUnit);
+
             _isChooseDone = true;
         }
 

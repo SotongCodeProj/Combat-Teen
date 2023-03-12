@@ -1,5 +1,6 @@
 using CombTeen.Gameplay.Unit.Action.Logic;
 using CombTeen.Gameplay.Unit.Action.Object;
+using CombTeen.Gameplay.Unit.Status;
 using UnityEngine;
 
 namespace CombTeen.Gameplay.DataTransport.TestData
@@ -15,9 +16,29 @@ namespace CombTeen.Gameplay.DataTransport.TestData
     {
         public string CharacterId;
         public string CharacterName;
+        [Header("Status")]
+        public CharacterStat BasicStatus;
+
+        [Header("Action")]
         public SkillObject<BaseAttackAction> AttackAction;
         public SkillObject<BaseDefenseAction> DefenseAction;
         public SkillObject<BaseSkillAction>[] SkillsAction;
         public SkillObject<BaseSupportAction> SupportAction;
+    }
+
+    [System.Serializable]
+    public struct CharacterStat : IBasicStat
+    {
+        public int Attack => _attack;
+        public int Defense => _defense;
+        public int Health => _health;
+        public int Speed => _speed;
+        public int Ap => _ap;
+
+        [SerializeField] private int _attack;
+        [SerializeField] private int _defense;
+        [SerializeField] private int _health;
+        [SerializeField] private int _speed;
+        [SerializeField] private int _ap;
     }
 }

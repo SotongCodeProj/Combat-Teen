@@ -18,6 +18,10 @@ public class GameplayLifetime : LifetimeScope
     [SerializeField] private Units _playerUnits;
     [SerializeField] private Units _enemyUnits;
 
+    [Header("Tile")]
+    [SerializeField] TileComponent _tileComponent;
+
+    [Header("HUD")]
     [SerializeField] private HUDComponent _hudComponent;
 
 
@@ -29,12 +33,13 @@ public class GameplayLifetime : LifetimeScope
         }
         for (int i = 0; i < _monobehavScripts.Length; i++)
         {
-            builder.Register(_monobehavScripts.GetType(),Lifetime.Scoped);
+            builder.Register(_monobehavScripts.GetType(), Lifetime.Scoped);
         }
 
         RegisterTurnBasedComponents(builder);
         RegisterPlayerUnits(builder);
         RegisterEnemyUnits(builder);
+        RegisterTileComponents(builder);
         RegisterHUDComponent(builder);
 
     }
@@ -78,6 +83,23 @@ public class GameplayLifetime : LifetimeScope
         builder.RegisterInstance(listInstance)
         .As(readonlyList);
     }
+    private void RegisterTileComponents(IContainerBuilder builder)
+    {
+        builder.Register(_tileComponent.TileController.GetClass(), Lifetime.Scoped).AsImplementedInterfaces();
+        //Register tile Object
+        var controller = _tileComponent.TileObjectBridge.GetClass();
+        var readonlyList = typeof(IReadOnlyList<>).MakeGenericType(controller);
+
+        var listType = typeof(List<>).MakeGenericType(controller);
+        IList listInstance = (IList)Activator.CreateInstance(listType);
+
+        foreach (var view in _tileComponent.TileViews)
+        {
+            listInstance.Add(Activator.CreateInstance(controller, new object[] { view }));
+        }
+        builder.RegisterInstance(listInstance)
+        .As(readonlyList);
+    }
     private void RegisterEnemyUnits(IContainerBuilder builder)
     {
         var controller = _enemyUnits.bridgeController.GetClass();
@@ -94,12 +116,12 @@ public class GameplayLifetime : LifetimeScope
         builder.RegisterInstance(listInstance)
         .As(readonlyList);
     }
-
     private void RegisterHUDComponent(IContainerBuilder builder)
     {
         builder.RegisterComponent<ActionPanelView>(_hudComponent.ActionPanelView).AsImplementedInterfaces();
         builder.Register(_hudComponent.ActionPanelControl.GetClass(), Lifetime.Scoped).AsImplementedInterfaces();
     }
+
     protected override void Awake()
     {
         base.Awake();
@@ -135,4 +157,12 @@ public class GameplayLifetime : LifetimeScope
         public ActionPanelView ActionPanelView;
     }
 
+    [System.Serializable]
+    public struct TileComponent
+    {
+        public UnityEditor.MonoScript TileController;
+
+        public UnityEditor.MonoScript TileObjectBridge;
+        public MonoBehaviour[] TileViews;
+    }
 }

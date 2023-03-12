@@ -47,11 +47,5 @@ namespace CombTeen.Gameplay.State
             }
             await UniTask.Delay(500);
         }
-
-        private void SetUnitAction(CombatUnitControl unit)
-        {
-            unit.Data.SetAction(unit.Data.AttackAction);
-
-        }
     }
 }

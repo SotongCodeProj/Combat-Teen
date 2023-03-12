@@ -21,7 +21,8 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{ActionId} will do Skill Action from {Owner.Data.UnitName}",true);
+            UILogger.Instance.LogSub($"{ActionId} will do Skill Action from {Owner.Data.UnitName}", true);
+            UILogger.Instance.LogSub($"{TargetUnits.Data.UnitName} Take Damage from Skill");
             return UniTask.Delay(500);
         }
 
