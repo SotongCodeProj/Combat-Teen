@@ -47,10 +47,10 @@ namespace CombTeen.Gameplay.State
 
             _actionOrderResult.Clear();
 
-            var SortedList = actionUnits.OrderByDescending(unit => unit.Data.FinalStatus.Speed).ToList();
+            var SortedList = actionUnits.OrderByDescending(unit => unit.UnitStatusData.FinalStatus.Speed).ToList();
             for (int i = 0; i < SortedList.Count; i++)
             {
-                _actionOrderResult.Add(SortedList[i].Data.UsedAction);
+                _actionOrderResult.Add(SortedList[i].UnitActionData.UsedAction);
             }
 
         }

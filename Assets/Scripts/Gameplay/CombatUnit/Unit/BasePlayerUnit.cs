@@ -1,3 +1,4 @@
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
 
 namespace CombTeen.Gameplay.Unit
@@ -6,9 +7,10 @@ namespace CombTeen.Gameplay.Unit
     public class BasePlayerUnit : CombatUnitControl, IPlayerUnit
     {
         public override string UnitId => "Player";
-        public BasePlayerUnit(CombatUnitView view)
+        public BasePlayerUnit(CombatUnitView view, TileController tileController)
         {
             View = view;
+            TileControl = tileController;
         }
     }
 }

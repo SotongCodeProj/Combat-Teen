@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CombTeen.Gameplay.DataTransport.TestData;
 using CombTeen.Gameplay.StateRunner;
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
@@ -12,6 +13,15 @@ public class TestRunner : MonoBehaviour
     [SerializeField] private BasicCombatRunner _runner;
     [SerializeField] private Test_PlayCharacterData _testData;
 
+    private ITileController _tileControl;
+
+
+    [Inject]
+    public void Inject(ITileController tileControl)
+    {
+        _tileControl = tileControl;
+    }
+
     private IReadOnlyList<BasePlayerUnit> _playerUnits;
     private IReadOnlyList<BaseEnemyUnit> _enemyUnits;
 
@@ -20,8 +30,11 @@ public class TestRunner : MonoBehaviour
     [Inject]
     public void Inject(BasicCombatRunner runner,
                        IReadOnlyList<BasePlayerUnit> playerUnits,
-                       IReadOnlyList<BaseEnemyUnit> enemyUnits)
+                       IReadOnlyList<BaseEnemyUnit> enemyUnits,
+                       ITileController tileControl)
     {
+        _tileControl = tileControl;
+
         _runner = runner;
         _playerUnits = playerUnits;
         _enemyUnits = enemyUnits;
@@ -33,10 +46,13 @@ public class TestRunner : MonoBehaviour
         for (int i = 0; i < _playerUnits.Count; i++)
         {
             _playerUnits[i].InitialUnitData(_testData.PlayersData[i]);
+            _playerUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
+
         }
         for (int i = 0; i < _enemyUnits.Count; i++)
         {
             _enemyUnits[i].InitialUnitData(_testData.EnemysData[i]);
+            _enemyUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
         }
     }
 
@@ -62,5 +78,29 @@ public class TestRunner : MonoBehaviour
     private void EndCombat()
     {
         _keepRun = false;
+    }
+    [Button]
+    private void RandomCharacterPos()
+    {
+        for (int i = 0; i < _playerUnits.Count; i++)
+        {
+            _playerUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
+
+        }
+        for (int i = 0; i < _enemyUnits.Count; i++)
+        {
+            _enemyUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
+        }
+    }
+    [Button]
+    private void GetUnitsOnTile()
+    {
+        foreach (var item in _tileControl.Test_GetAllTile())
+        {
+            if (item.OccupiedUnit != null)
+            {
+                Debug.Log($"Tile {item.name} have : {item.OccupiedUnit.viewName}");
+            }
+        }
     }
 }

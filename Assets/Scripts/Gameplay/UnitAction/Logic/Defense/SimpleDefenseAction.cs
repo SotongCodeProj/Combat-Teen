@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
+
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
     public class SimpleDefenseAction : BaseDefenseAction
     {
         public override string ActionId => "A-DEF-000";
-
+        public override ITileArea ActionArea => new TileArea{};
         protected override UniTask PreState()
         {
             return UniTask.CompletedTask;
@@ -21,7 +20,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{ActionId} will do defense action from {Owner.Data.UnitName}",true);
+            UILogger.Instance.LogSub($"{ActionId} will do defense action from {Owner.UnitBasicInfoData.UnitName}",true);
             return UniTask.Delay(500);
         }
 

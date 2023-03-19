@@ -1,3 +1,4 @@
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit;
 using CombTeen.Gameplay.Unit.MVC;
 using VContainer.Unity;
@@ -14,14 +15,17 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private IActionPanelView _view;
         private CombatUnitControl _currentUnit;
         private CombatUnitsHandler _unitsHandler;
+        private ITileController _tileControl;
 
         private bool _isChooseDone = false;
         public ActionPanelController(IActionPanelView view,
-                                     CombatUnitsHandler combatUnitHandler
+                                     CombatUnitsHandler combatUnitHandler,
+                                     ITileController tileController
                                     )
         {
             _view = view;
             _unitsHandler = combatUnitHandler;
+            _tileControl = tileController;
         }
         public void Start()
         {
@@ -39,24 +43,29 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
 
         private void SetAttackAction()
         {
-            _currentUnit.Data.SetAction(_currentUnit.Data.AttackAction)
+            _currentUnit.UnitActionData.SetAttackAction()
             .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
+
+            _tileControl.ShowTileArea(
+                _currentUnit.UnitTileData.Coordinate,
+                _currentUnit.UnitActionData.UsedAction.ActionArea
+            );
             _isChooseDone = true;
         }
         private void SetDefenseAction()
         {
-            _currentUnit.Data.SetAction(_currentUnit.Data.DefenseAction);
+            _currentUnit.UnitActionData.SetDefeseAction();
             _isChooseDone = true;
         }
         private void SetSupportAction()
         {
-            _currentUnit.Data.SetAction(_currentUnit.Data.SupportAction);
+            _currentUnit.UnitActionData.SeSupportAction();
             _isChooseDone = true;
         }
 
         private void SetSkillAction(int indexSlot)
         {
-            _currentUnit.Data.SetAction(_currentUnit.Data.SkillActions[indexSlot])
+            _currentUnit.UnitActionData.SetSkillAction(indexSlot)
             .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
 
             _isChooseDone = true;
@@ -65,7 +74,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         public void InitUnitHandledUnit(CombatUnitControl selectedUnit)
         {
             _currentUnit = selectedUnit;
-            _view.SetVisual(selectedUnit.Data.UnitName);
+            _view.SetVisual(selectedUnit.UnitBasicInfoData.UnitName);
             _isChooseDone = false;
         }
 

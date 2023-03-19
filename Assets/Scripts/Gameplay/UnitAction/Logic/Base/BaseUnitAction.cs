@@ -1,3 +1,4 @@
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
 using System;
@@ -19,6 +20,8 @@ namespace CombTeen.Gameplay.Unit.Action
         public CombatUnitControl Owner { protected set; get; }
         public abstract string ActionId { get; }
 
+        public abstract ITileArea ActionArea { get; }
+
         public UniTask PreProcess => PreState();
         public UniTask MainProcess => ProcessState();
         public UniTask PostProcess => PostState();
@@ -26,7 +29,7 @@ namespace CombTeen.Gameplay.Unit.Action
         protected abstract UniTask PreState();
         protected abstract UniTask ProcessState();
         protected abstract UniTask PostState();
-        
+
         public virtual ValueTask DisposeAsync()
         {
             return default;

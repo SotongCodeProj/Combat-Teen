@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
     public class SimpleSupportAction : BaseSupportAction
     {
         public override string ActionId => "A-SPT-000";
+
+        public override ITileArea ActionArea => new TileArea { };
 
         protected override UniTask PreState()
         {
@@ -21,7 +21,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{ActionId} will do Support action from {Owner.Data.UnitName}",true);
+            UILogger.Instance.LogSub($"{ActionId} will do Support action from {Owner.UnitBasicInfoData.UnitName}", true);
             return UniTask.Delay(500);
         }
 

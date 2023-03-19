@@ -1,6 +1,6 @@
+using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
@@ -8,7 +8,17 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
     public class SimpleSkillAction : BaseSkillAction
     {
         public override string ActionId => "A-SKL-000";
+        public override ITileArea ActionArea => new TileArea{
+            Up=2,
+            Down=2,
+            Left =2,
+            Right=2,
 
+            DownLeft=2,
+            DownRight =2,
+            UpLeft=2,
+            UpRight=2
+        };
         protected override UniTask PreState()
         {
             return UniTask.CompletedTask;
@@ -20,7 +30,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{Owner.Data.UnitName} Deal Damge using Simple Skill to {TargetUnits.Data.UnitName}",true);
+            UILogger.Instance.LogSub($"{Owner.UnitBasicInfoData.UnitName} Deal Damge using Simple Skill to {TargetUnits.UnitBasicInfoData.UnitName}",true);
             return UniTask.Delay(500);
         }
 
