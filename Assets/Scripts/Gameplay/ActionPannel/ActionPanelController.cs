@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit;
 using CombTeen.Gameplay.Unit.MVC;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace CombTeen.Gameplay.Screen.ActionPanel
@@ -48,18 +50,44 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
 
             _tileControl.ShowTileArea(
                 _currentUnit.UnitTileData.Coordinate,
-                _currentUnit.UnitActionData.UsedAction.ActionArea
+                _currentUnit.UnitActionData.UsedAction.ActionArea,
+                out IEnumerable<CombatUnitControl> unitsOnTile
             );
+            foreach (var item in unitsOnTile)
+            {
+                Debug.Log($"Unit On aroundArea : {item.viewName}");
+            }
             _isChooseDone = true;
         }
         private void SetDefenseAction()
         {
             _currentUnit.UnitActionData.SetDefeseAction();
+
+            _tileControl.ShowTileArea(
+               _currentUnit.UnitTileData.Coordinate,
+               _currentUnit.UnitActionData.UsedAction.ActionArea,
+               out IEnumerable<CombatUnitControl> unitsOnTile
+           );
+
+            foreach (var item in unitsOnTile)
+            {
+                Debug.Log("Unit On aroundArea : {item.viewName}");
+            }
             _isChooseDone = true;
         }
         private void SetSupportAction()
         {
             _currentUnit.UnitActionData.SeSupportAction();
+
+            _tileControl.ShowTileArea(
+               _currentUnit.UnitTileData.Coordinate,
+               _currentUnit.UnitActionData.UsedAction.ActionArea,
+               out IEnumerable<CombatUnitControl> unitsOnTile
+           );
+            foreach (var item in unitsOnTile)
+            {
+                Debug.Log("Unit On aroundArea : {item.viewName}");
+            }
             _isChooseDone = true;
         }
 
@@ -68,6 +96,15 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             _currentUnit.UnitActionData.SetSkillAction(indexSlot)
             .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
 
+            _tileControl.ShowTileArea(
+               _currentUnit.UnitTileData.Coordinate,
+               _currentUnit.UnitActionData.UsedAction.ActionArea,
+               out IEnumerable<CombatUnitControl> unitsOnTile
+           );
+            foreach (var item in unitsOnTile)
+            {
+                Debug.Log("Unit On aroundArea : {item.viewName}");
+            }
             _isChooseDone = true;
         }
 

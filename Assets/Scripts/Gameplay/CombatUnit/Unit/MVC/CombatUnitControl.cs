@@ -12,7 +12,7 @@ namespace CombTeen.Gameplay.Unit.MVC
         public abstract string UnitId { get; }
         protected CombatUnitModel Data = new CombatUnitModel();
         protected CombatUnitView View;
-        protected TileController TileControl;
+        protected ITileController TileControl;
 
         public string viewName => View.name;
         public IUnitBasicInfoData UnitBasicInfoData => Data;

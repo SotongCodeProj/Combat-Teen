@@ -1,5 +1,7 @@
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
+using UnityEngine;
+using VContainer;
 
 namespace CombTeen.Gameplay.Unit
 {
@@ -7,10 +9,15 @@ namespace CombTeen.Gameplay.Unit
     public class BasePlayerUnit : CombatUnitControl, IPlayerUnit
     {
         public override string UnitId => "Player";
-        public BasePlayerUnit(CombatUnitView view, TileController tileController)
+
+        [Inject]
+        public void Inject(ITileController tileController)
+        {
+            TileControl = tileController;
+        }
+        public BasePlayerUnit(CombatUnitView view)
         {
             View = view;
-            TileControl = tileController;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace CombTeen.Gameplay.Unit.MVC.Data
     public interface IUnitTileData
     {
         Vector2Int Coordinate { get; }
-        IActionTileData CurrentTile { get; }
+        ActionTileObject CurrentTile { get; }
     }
     #endregion
 }

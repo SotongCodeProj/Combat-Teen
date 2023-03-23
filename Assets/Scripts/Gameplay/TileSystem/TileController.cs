@@ -12,6 +12,8 @@ namespace CombTeen.Gameplay.Tile
         ActionTileObject Test_GetRandomTile();
         IEnumerable<ActionTileObject> Test_GetAllTile();
         void ShowTileArea(Vector2Int ancorPos, ITileArea showArea);
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<CombatUnitControl> unitsOnTile);
+        ActionTileObject SetOccupiedTile(ActionTileObject targetTile, ActionTileObject currentTile, CombatUnitControl combatUnitControl);
     }
 
     public class TileController : ITileController
@@ -41,6 +43,22 @@ namespace CombTeen.Gameplay.Tile
             }
 
         }
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<CombatUnitControl> unitsOnTile)
+        {
+            unitsOnTile = new List<CombatUnitControl>();
+            List<CombatUnitControl> units = new List<CombatUnitControl>();
+            ShowTileArea(ancorPos, showArea);
+
+            for (int i = 0; i < _currentActiveTile.Count; i++)
+            {
+                if (_currentActiveTile[i].OccupiedUnit != null)
+                {
+                    units.Add(_currentActiveTile[i].OccupiedUnit);
+                }
+
+                unitsOnTile = units;
+            }
+        }
 
         public IEnumerable<ActionTileObject> Test_GetAllTile()
         {
@@ -59,10 +77,11 @@ namespace CombTeen.Gameplay.Tile
             return randomTile;
         }
 
-        public IActionTileData SetOccupiedTile(IActionTileData newTile, IActionTileData oldTile, CombatUnitControl combatUnitControl)
+        public ActionTileObject SetOccupiedTile(ActionTileObject newTile, ActionTileObject oldTile, CombatUnitControl combatUnitControl)
         {
-            _tileData.AllTiles[oldTile.TileCoordinate].SetOccuppiedUnit(combatUnitControl);
+            if (oldTile != null) _tileData.AllTiles[oldTile.TileCoordinate].SetOccuppiedUnit(null);
             _tileData.AllTiles[newTile.TileCoordinate].SetOccuppiedUnit(combatUnitControl);
+            
             return newTile;
         }
     }

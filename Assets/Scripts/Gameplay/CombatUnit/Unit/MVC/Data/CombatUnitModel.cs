@@ -83,7 +83,7 @@ namespace CombTeen.Gameplay.Unit.MVC
         #region  Tile
         public Vector2Int Coordinate { protected set; get; }
 
-        public IActionTileData CurrentTile { private set; get; }
+        public ActionTileObject CurrentTile { private set; get; }
 
         public void SetWorldPosition(ITileObject targetTile)
         {
