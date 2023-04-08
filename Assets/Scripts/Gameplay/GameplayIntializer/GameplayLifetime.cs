@@ -53,28 +53,21 @@ namespace CombTeen.Gameplay
 
         private void RegisterTurnBasedComponents(IContainerBuilder builder)
         {
-            builder.Register(_turnBaseComponents.ModelScript.GetClass(), Lifetime.Scoped)
-           .AsImplementedInterfaces()
-           .AsSelf();
-
             builder.Register(_turnBaseComponents.RunnerScript.GetClass(), Lifetime.Scoped)
-            .AsImplementedInterfaces()
             .AsSelf();
 
             foreach (var state in _turnBaseComponents.States)
             {
                 builder.Register(state.Bridge.GetClass(), Lifetime.Scoped)
-                .AsImplementedInterfaces()
                 .AsSelf();
                 foreach (var stateComp in state.AdditionalComponents)
                 {
                     builder.Register(stateComp.GetClass(), Lifetime.Scoped)
-                    .AsImplementedInterfaces()
                     .AsSelf();
                 }
             }
         }
-        
+
         private void RegisterPlayerUnits(IContainerBuilder builder)
         {
             var bridgeController = _playerUnits.BridgeController.GetClass();
@@ -85,7 +78,7 @@ namespace CombTeen.Gameplay
 
             foreach (var unit in _playerUnits.UnitObjects)
             {
-                var controller = Activator.CreateInstance(unit.UnitController.GetClass(), new[] { unit.View });
+                var controller = Activator.CreateInstance(unit.UnitController.GetClass(), new object[] { unit.View, unit.IndicatorView });
                 listInstance.Add(controller);
             }
             builder.RegisterInstance(listInstance).As(readonlyList);
@@ -109,7 +102,7 @@ namespace CombTeen.Gameplay
 
             foreach (var unit in _enemyUnits.UnitObjects)
             {
-                var controller = Activator.CreateInstance(unit.UnitController.GetClass(), new[] { unit.View });
+                var controller = Activator.CreateInstance(unit.UnitController.GetClass(), new object[] { unit.View, unit.IndicatorView });
                 listInstance.Add(controller);
             }
             builder.RegisterInstance(listInstance).As(readonlyList);
@@ -159,7 +152,6 @@ namespace CombTeen.Gameplay
         public struct GameplayTurnBaseComponent
         {
             public UnityEditor.MonoScript RunnerScript;
-            public UnityEditor.MonoScript ModelScript;
 
             public SateComponent[] States;
         }
@@ -182,6 +174,7 @@ namespace CombTeen.Gameplay
             {
                 public UnityEditor.MonoScript UnitController;
                 public CombatUnitView View;
+                public CombatUnitIndicatorView IndicatorView;
             }
         }
 

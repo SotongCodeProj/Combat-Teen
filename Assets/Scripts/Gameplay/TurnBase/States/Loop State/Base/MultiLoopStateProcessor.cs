@@ -18,13 +18,16 @@ namespace CombTeen.Gameplay.State
             var orders = CalculatorOrder.GetOrder();
             foreach (var item in orders)
             {
-                await using (BaseUnitAction running = item)
+                if (item.Owner.UnitStatusData.CombatStat.Health >= 0)
                 {
-                    await running.PreProcess;
-                    await running.MainProcess;
-                    await running.PostProcess;
+                    await using (BaseUnitAction running = item)
+                    {
+                        await running.PreProcess;
+                        await running.MainProcess;
+                        await running.PostProcess;
+                    }
                 }
-                await UniTask.Delay(1000);
+                await UniTask.Delay(500);
             }
 
             await UniTask.Delay(500);

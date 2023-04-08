@@ -1,4 +1,5 @@
 using CombTeen.Gameplay.Tile;
+using CombTeen.Gameplay.Unit.Action.Helper;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
 
@@ -21,16 +22,22 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{ActionId} will do Support action from {Owner.UnitBasicInfoData.UnitName}", true);
+            Owner.UnitStatusData.ChangeCombatStatusAction.AddHealth(10);
             return UniTask.Delay(500);
         }
 
-        public override BaseSupportAction InitializeOwner(CombatUnitControl owner)
+        public override BaseUnitAction InitializeOwner(CombatUnitControl owner)
         {
             return new SimpleSupportAction()
             {
                 Owner = owner
             };
+        }
+
+        public async override UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper)
+        {
+            var target = await targetChooseHelper.GetSelfTargetAsync(Owner);
+            TargetUnits = new[] { target };
         }
     }
 }

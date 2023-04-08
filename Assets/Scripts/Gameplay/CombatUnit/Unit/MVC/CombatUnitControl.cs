@@ -12,6 +12,7 @@ namespace CombTeen.Gameplay.Unit.MVC
         public abstract string UnitId { get; }
         protected CombatUnitModel Data = new CombatUnitModel();
         protected CombatUnitView View;
+        protected CombatUnitIndicatorView StatusIndicator;
         protected ITileController TileControl;
 
         public string viewName => View.name;
@@ -20,22 +21,25 @@ namespace CombTeen.Gameplay.Unit.MVC
         public IUnitStatusData UnitStatusData => Data;
         public IUnitActionData UnitActionData => Data;
 
-        public void InitialUnitData(CharacterData Character)
+        public virtual void InitialUnitData(CharacterData Character)
         {
             Data.InitializeBasicInfo(Character.CharacterId, Character.CharacterName);
 
             List<BaseSkillAction> skills = new List<BaseSkillAction>();
             for (int i = 0; i < Character.SkillsAction.Length; i++)
             {
-                skills.Add(Character.SkillsAction[i].Logic.InitializeOwner(this));
+                skills.Add((BaseSkillAction)Character.SkillsAction[i].Logic.InitializeOwner(this));
             }
 
-            Data.InitializeAction(Character.AttackAction.Logic.InitializeOwner(this),
-                            Character.DefenseAction.Logic.InitializeOwner(this),
-                            Character.SupportAction.Logic.InitializeOwner(this),
-                            skills.ToArray());
+            Data.InitializeAction((BaseAttackAction)Character.AttackAction.Logic.InitializeOwner(this),
+                                  (BaseDefenseAction)Character.DefenseAction.Logic.InitializeOwner(this),
+                                  (BaseSupportAction)Character.SupportAction.Logic.InitializeOwner(this),
+                                   skills.ToArray(),
+                                  (BaseMoveAction)Character.MoveAction.Logic.InitializeOwner(this));
 
             Data.InitializeStat(Character.BasicStatus);
+
+            Data.ChangeCombatStatusAction.AfterTakeDamageEvent.AddListener(CheckUnitDie);
         }
         public void SetLocation(ActionTileObject targetTile)
         {
@@ -47,6 +51,15 @@ namespace CombTeen.Gameplay.Unit.MVC
             targetTile.TileWorldPosition.x
             , View.transform.localPosition.y,
             targetTile.TileWorldPosition.z);
+        }
+
+        private void CheckUnitDie(int currentHelth)
+        {
+            if (currentHelth <= 0)
+            {
+                View.SetUnitDie();
+                UnitTileData.CurrentTile.SetOccuppiedUnit(null);
+            }
         }
     }
 }

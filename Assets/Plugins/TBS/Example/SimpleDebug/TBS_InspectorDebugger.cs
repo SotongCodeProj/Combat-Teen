@@ -15,7 +15,7 @@ namespace TBS.Sample
         private async void Test()
         {
             runner.Initialize(data);
-            await runner.BeginProcess();
+            await runner.RunAsync();
         }
         [Button]
         private void NextOnLoop()

@@ -10,10 +10,7 @@ namespace TBS.Core.Runner
         M Data { get; }
 
         public void Next();
-
-        public UniTask BeginProcess();
-        public UniTask LoopProcess();
-        public UniTask EndProcess();
-
+        public UniTask RunAsync();
+        public void Terminate();
     }
 }

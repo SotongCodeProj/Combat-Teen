@@ -8,15 +8,13 @@ using UnityEngine;
 
 namespace CombTeen.Gameplay.StateModel
 {
-    // [CreateAssetMenu(menuName = "TB-Model/BasicCombat")]
     public class BasicCombatModel : IStateTurnModel
     {
         [SerializeField] private BasicStartBattleState _startBattle;
         [SerializeField] private List<BaseLoopState> _LoopSequence;
         [SerializeField] private BasicEndBattleState _endBattle;
 
-        public BasicCombatModel(
-                                BasicStartBattleState startBattle,
+        public BasicCombatModel(BasicStartBattleState startBattle,
 
                                 PlayerChooseActionState playerChooseAction,
                                 CalculateActionOrderState calculateAction,

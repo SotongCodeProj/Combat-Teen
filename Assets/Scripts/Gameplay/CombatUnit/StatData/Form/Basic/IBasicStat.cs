@@ -3,11 +3,11 @@ namespace CombTeen.Gameplay.Unit.Status
 {
     public interface IBasicStat_ModifAction
     {
-        public void Set_Attack(int value);
-        public void Set_Defense(int value);
-        public void Set_Health(int value);
-        public void Set_Speed(int value);
-        public void Set_Ap(int value);
+        public void AddAttack(int value);
+        public void AddDefense(int value);
+        public void AddHealth(int value);
+        public void AddSpeed(int value);
+        public void AddAp(int value);
     }
     public interface IBasicStat
     {

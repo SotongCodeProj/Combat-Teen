@@ -27,7 +27,7 @@ namespace CombTeen.Gameplay.Unit
             return _enemyUnits.ToArray();
         }
 
-        public IReadOnlyList<CombatUnitControl> GetAllUnits()
+        public IEnumerable<CombatUnitControl> GetAllUnits()
         {
             if (_allCurrentUnits.Count <= 0)
             {
@@ -38,12 +38,26 @@ namespace CombTeen.Gameplay.Unit
             return _allCurrentUnits;
         }
 
-        internal CombatUnitControl GetRandomOpenent(CombatUnitControl requestedUnit)
+        public CombatUnitControl GetRandomOpenent(CombatUnitControl requestedUnit)
         {
-            if(_playerUnits.Contains(requestedUnit)){
-                return _enemyUnits[Random.Range(0,_enemyUnits.Count)];
-            }else
-            return _playerUnits[Random.Range(0,_enemyUnits.Count)];
+            if (_playerUnits.Contains(requestedUnit))
+            {
+                return _enemyUnits[Random.Range(0, _enemyUnits.Count)];
+            }
+            else
+                return _playerUnits[Random.Range(0, _enemyUnits.Count)];
+        }
+
+        public bool IsAlly(CombatUnitControl requester, CombatUnitControl targetUnit)
+        {
+            if (_playerUnits.Contains(requester)) return _playerUnits.Contains(targetUnit);
+            else return _enemyUnits.Contains(targetUnit);
+        }
+
+        public bool IsOpponent(CombatUnitControl requester, CombatUnitControl targetUnit)
+        {
+            if (_playerUnits.Contains(requester)) return _enemyUnits.Contains(targetUnit);
+            else return _playerUnits.Contains(targetUnit);
         }
     }
 }

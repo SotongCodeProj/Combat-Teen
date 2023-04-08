@@ -20,10 +20,11 @@ namespace CombTeen.Gameplay.DataTransport.TestData
         public CharacterStat BasicStatus;
 
         [Header("Action")]
-        public SkillObject<BaseAttackAction> AttackAction;
-        public SkillObject<BaseDefenseAction> DefenseAction;
-        public SkillObject<BaseSkillAction>[] SkillsAction;
-        public SkillObject<BaseSupportAction> SupportAction;
+        public ActionObject<BaseAttackAction> AttackAction;
+        public ActionObject<BaseDefenseAction> DefenseAction;
+        public ActionObject<BaseSkillAction>[] SkillsAction;
+        public ActionObject<BaseSupportAction> SupportAction;
+        public ActionObject<BaseMoveAction> MoveAction;
     }
 
     [System.Serializable]

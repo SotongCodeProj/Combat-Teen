@@ -23,8 +23,17 @@ namespace TBS.Core.Runner
             LoopIndex = (LoopIndex + 1) >= Data.LoopStates.Count() ?
                             0 : LoopIndex + 1;
         }
+        public UniTask RunAsync()
+        {
+            throw new System.NotImplementedException();
+        }
 
-        public async UniTask BeginProcess()
+        public void Terminate()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private async UniTask BeginProcess()
 
         {
             LoopIndex = 0;
@@ -42,7 +51,7 @@ namespace TBS.Core.Runner
                 await LoopProcess();
             }
         }
-        public async UniTask LoopProcess()
+        private async UniTask LoopProcess()
         {
             _currentState = TBS_State.Loop;
             var targetState = Data.LoopStates.ElementAt(LoopIndex);
@@ -54,7 +63,7 @@ namespace TBS.Core.Runner
                 await target.PostState;
             }
         }
-        public async UniTask EndProcess()
+        private async UniTask EndProcess()
         {
             if (!_currentState.Equals(TBS_State.Loop)) return;
 
@@ -66,5 +75,7 @@ namespace TBS.Core.Runner
                 await endState.PostState;
             }
         }
+
+
     }
 }

@@ -1,7 +1,8 @@
-using System.Collections.Generic;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit;
+using CombTeen.Gameplay.Unit.Action.Helper;
 using CombTeen.Gameplay.Unit.MVC;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -11,6 +12,8 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
     {
         public void InitUnitHandledUnit(CombatUnitControl selectedUnit);
         public bool IsChooseDone();
+
+        public void EnableControl(bool enable);
     }
     public class ActionPanelController : IActionPanelControl, IStartable
     {
@@ -18,16 +21,19 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private CombatUnitControl _currentUnit;
         private CombatUnitsHandler _unitsHandler;
         private ITileController _tileControl;
+        private TargetChooseHelper _targetChooseHelper;
 
         private bool _isChooseDone = false;
         public ActionPanelController(IActionPanelView view,
                                      CombatUnitsHandler combatUnitHandler,
-                                     ITileController tileController
+                                     ITileController tileController,
+                                     TargetChooseHelper targetChooseHelper
                                     )
         {
             _view = view;
             _unitsHandler = combatUnitHandler;
             _tileControl = tileController;
+            _targetChooseHelper = targetChooseHelper;
         }
         public void Start()
         {
@@ -37,74 +43,52 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private void InitViewEvent()
         {
 
-            _view.AttackClickEvent.AddListener(SetAttackAction);
-            _view.DefenseClickEvent.AddListener(SetDefenseAction);
-            _view.SupportClickEvent.AddListener(SetSupportAction);
-            _view.SkillClickEvent.AddListener(SetSkillAction);
+            _view.AttackClickEvent.AddListener(() => SetAttackActionAsync().Forget());
+            _view.DefenseClickEvent.AddListener(() => SetDefenseActionAsycn().Forget());
+            _view.SupportClickEvent.AddListener(() => SetSupportActionAsync().Forget());
+            _view.SkillClickEvent.AddListener((slotIndex) => SetSkillActionAsync(slotIndex).Forget());
+            _view.MoveClickEvent.AddListener(() => SetMoveActionAsync().Forget());
         }
 
-        private void SetAttackAction()
+        private async UniTaskVoid SetAttackActionAsync()
         {
-            _currentUnit.UnitActionData.SetAttackAction()
-            .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
+            Debug.Log("Choose Attack");
+            await _currentUnit.UnitActionData.SetAttackAction()
+             .SetUnitTargets(_targetChooseHelper);
 
-            _tileControl.ShowTileArea(
-                _currentUnit.UnitTileData.Coordinate,
-                _currentUnit.UnitActionData.UsedAction.ActionArea,
-                out IEnumerable<CombatUnitControl> unitsOnTile
-            );
-            foreach (var item in unitsOnTile)
-            {
-                Debug.Log($"Unit On aroundArea : {item.viewName}");
-            }
+            _tileControl.ClearShowTile();
             _isChooseDone = true;
         }
-        private void SetDefenseAction()
+        private async UniTaskVoid SetDefenseActionAsycn()
         {
-            _currentUnit.UnitActionData.SetDefeseAction();
-
-            _tileControl.ShowTileArea(
-               _currentUnit.UnitTileData.Coordinate,
-               _currentUnit.UnitActionData.UsedAction.ActionArea,
-               out IEnumerable<CombatUnitControl> unitsOnTile
-           );
-
-            foreach (var item in unitsOnTile)
-            {
-                Debug.Log("Unit On aroundArea : {item.viewName}");
-            }
+            await _currentUnit.UnitActionData.SetDefeseAction()
+            .SetUnitTargets(_targetChooseHelper);
+            _tileControl.ClearShowTile();
             _isChooseDone = true;
         }
-        private void SetSupportAction()
+        private async UniTaskVoid SetSupportActionAsync()
         {
-            _currentUnit.UnitActionData.SeSupportAction();
+            await _currentUnit.UnitActionData.SetSupportAction()
+            .SetUnitTargets(_targetChooseHelper);
 
-            _tileControl.ShowTileArea(
-               _currentUnit.UnitTileData.Coordinate,
-               _currentUnit.UnitActionData.UsedAction.ActionArea,
-               out IEnumerable<CombatUnitControl> unitsOnTile
-           );
-            foreach (var item in unitsOnTile)
-            {
-                Debug.Log("Unit On aroundArea : {item.viewName}");
-            }
+            _tileControl.ClearShowTile();
             _isChooseDone = true;
         }
 
-        private void SetSkillAction(int indexSlot)
+        private async UniTaskVoid SetSkillActionAsync(int indexSlot)
         {
-            _currentUnit.UnitActionData.SetSkillAction(indexSlot)
-            .SetUnitTargets(_unitsHandler.GetRandomOpenent(_currentUnit));
+            await _currentUnit.UnitActionData.SetSkillAction(indexSlot)
+            .SetUnitTargets(_targetChooseHelper);
 
-            _tileControl.ShowTileArea(
-               _currentUnit.UnitTileData.Coordinate,
-               _currentUnit.UnitActionData.UsedAction.ActionArea,
-               out IEnumerable<CombatUnitControl> unitsOnTile
-           );
-            foreach (var item in unitsOnTile)
-            {
-                Debug.Log("Unit On aroundArea : {item.viewName}");
-            }
+            _tileControl.ClearShowTile();
+            _isChooseDone = true;
+        }
+        private async UniTaskVoid SetMoveActionAsync()
+        {
+            await _currentUnit.UnitActionData.SetMoveAction()
+            .SetUnitTargets(_targetChooseHelper);
+
+            _tileControl.ClearShowTile();
             _isChooseDone = true;
         }
 
@@ -120,5 +104,9 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             return _isChooseDone;
         }
 
+        public void EnableControl(bool enable)
+        {
+            _view.SetControlEnable(enable);
+        }
     }
 }

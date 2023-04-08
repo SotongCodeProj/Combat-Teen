@@ -1,4 +1,5 @@
 using System.Linq;
+using CombTeen.Gameplay.State;
 using CombTeen.Gameplay.StateModel;
 using Cysharp.Threading.Tasks;
 using TBS.Core;
@@ -12,21 +13,55 @@ namespace CombTeen.Gameplay.StateRunner
         public TBS_State _currentState { private set; get; }
         public int LoopIndex { private set; get; } = 0;
         public BasicCombatModel Data { protected set; get; }
-        public bool _doneLoopState { private set; get; } = false;
+        public bool DoneLoopState { private set; get; } = false;
+        private bool _keepRun = false;
 
-        public BasicCombatRunner(BasicCombatModel data)
+        public BasicCombatRunner(BasicStartBattleState startBattle,
+
+                                PlayerChooseActionState playerChooseAction,
+                                CalculateActionOrderState calculateAction,
+                                PlayUnitActionState playUnitAction,
+                                CheckBattleStatusState checkBattleStatus,
+
+                                BasicEndBattleState endBattle)
         {
-            Data = data;
+            Data = new BasicCombatModel(startBattle,
+                                        playerChooseAction,
+                                        calculateAction,
+                                        playUnitAction,
+                                        checkBattleStatus,
+                                        endBattle);
+            checkBattleStatus.OnBattleDone.AddListener(Terminate);
         }
 
+        public async UniTask RunAsync()
+        {
+            _keepRun = true;
+            await BeginProcess();
+
+            while (_keepRun)
+            {
+                await LoopProcess();
+                await UniTask.WaitUntil(() => DoneLoopState);
+                Next();
+            }
+
+            await EndProcess();
+        }
+        public void Terminate()
+        {
+            _keepRun = false;
+            Debug.LogWarning("Process Terminated");
+        }
         public void Next()
         {
-            if (!_currentState.Equals(TBS_State.Loop) || !_doneLoopState) { Debug.LogWarning("Error whenNext"); return; }
+            if (!_currentState.Equals(TBS_State.Loop) || !DoneLoopState) { Debug.LogWarning("Error whenNext"); return; }
             LoopIndex = (LoopIndex + 1) >= Data.LoopStates.Count() ?
                             0 : LoopIndex + 1;
 
         }
-        public async UniTask BeginProcess()
+
+        private async UniTask BeginProcess()
 
         {
             LoopIndex = 0;
@@ -39,9 +74,9 @@ namespace CombTeen.Gameplay.StateRunner
                 await start.PostState;
             }
         }
-        public async UniTask LoopProcess()
+        private async UniTask LoopProcess()
         {
-            _doneLoopState = false;
+            DoneLoopState = false;
             _currentState = TBS_State.Loop;
             var targetState = Data.LoopStates.ElementAt(LoopIndex);
 
@@ -51,9 +86,9 @@ namespace CombTeen.Gameplay.StateRunner
                 await target.ProcessSate;
                 await target.PostState;
             }
-            _doneLoopState = true;
+            DoneLoopState = true;
         }
-        public async UniTask EndProcess()
+        private async UniTask EndProcess()
         {
             if (!_currentState.Equals(TBS_State.Loop)) return;
 

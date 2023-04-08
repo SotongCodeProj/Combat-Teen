@@ -13,7 +13,9 @@ namespace CombTeen.Gameplay.Tile
         IEnumerable<ActionTileObject> Test_GetAllTile();
         void ShowTileArea(Vector2Int ancorPos, ITileArea showArea);
         public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<CombatUnitControl> unitsOnTile);
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<ActionTileObject> clickAbleTile);
         ActionTileObject SetOccupiedTile(ActionTileObject targetTile, ActionTileObject currentTile, CombatUnitControl combatUnitControl);
+        void ClearShowTile();
     }
 
     public class TileController : ITileController
@@ -52,14 +54,31 @@ namespace CombTeen.Gameplay.Tile
             for (int i = 0; i < _currentActiveTile.Count; i++)
             {
                 if (_currentActiveTile[i].OccupiedUnit != null)
-                {
                     units.Add(_currentActiveTile[i].OccupiedUnit);
-                }
 
-                unitsOnTile = units;
             }
+            unitsOnTile = units;
+        }
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<ActionTileObject> clickAbleTile)
+        {
+            clickAbleTile = new List<ActionTileObject>();
+            List<ActionTileObject> tileObjects = new List<ActionTileObject>();
+            ShowTileArea(ancorPos, showArea);
+
+            for (int i = 0; i < _currentActiveTile.Count; i++)
+            {
+                tileObjects.Add(_currentActiveTile[i]);
+            }
+            clickAbleTile = tileObjects;
         }
 
+        public void ClearShowTile()
+        {
+            foreach (var item in _currentActiveTile)
+            {
+                item.ChangeColorToDefault();
+            }
+        }
         public IEnumerable<ActionTileObject> Test_GetAllTile()
         {
             return _tileData.AllTiles.Values.Where(x => { return true; });
@@ -81,7 +100,7 @@ namespace CombTeen.Gameplay.Tile
         {
             if (oldTile != null) _tileData.AllTiles[oldTile.TileCoordinate].SetOccuppiedUnit(null);
             _tileData.AllTiles[newTile.TileCoordinate].SetOccuppiedUnit(combatUnitControl);
-            
+
             return newTile;
         }
     }

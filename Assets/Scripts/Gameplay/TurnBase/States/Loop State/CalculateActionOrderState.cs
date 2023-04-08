@@ -3,6 +3,7 @@ using CombTeen.Gameplay.Unit.Action;
 using CombTeen.Gameplay.Unit;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using CombTeen.Gameplay.Unit.MVC;
 
 namespace CombTeen.Gameplay.State
 {
@@ -43,11 +44,18 @@ namespace CombTeen.Gameplay.State
 
         private void CalculateOrder()
         {
-            var actionUnits = _unitHandler.GetAllUnits();
+            List<CombatUnitControl> actionUnits = new List<CombatUnitControl>(_unitHandler.GetAllUnits());
 
             _actionOrderResult.Clear();
+            for (int i = 0; i < actionUnits.Count(); i++)
+            {
+                if (actionUnits[i].UnitStatusData.CombatStat.Health <= 0)
+                {
+                    actionUnits.RemoveAt(i);
+                }
+            }
 
-            var SortedList = actionUnits.OrderByDescending(unit => unit.UnitStatusData.FinalStatus.Speed).ToList();
+            var SortedList = actionUnits.OrderByDescending(unit => unit.UnitStatusData.CombatStat.Speed).ToList();
             for (int i = 0; i < SortedList.Count; i++)
             {
                 _actionOrderResult.Add(SortedList[i].UnitActionData.UsedAction);

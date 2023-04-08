@@ -15,8 +15,10 @@ namespace CombTeen.Gameplay.Unit.MVC.Data
     }
     public interface IUnitStatusData
     {
-        public IUnitModifAction ModifStatusAction { get; }
-        public FinalUniStat FinalStatus { get; }
+        public IBasicStat CombatStat { get; }
+        public IBasicStat BaseStatus { get; }
+        public IUnitModifAction ChangeBaseParameterAction { get; }
+        public IUnitCombatStatModifAction ChangeCombatStatusAction { get; }
     }
     public interface IUnitActionData
     {
@@ -24,13 +26,15 @@ namespace CombTeen.Gameplay.Unit.MVC.Data
         public BaseDefenseAction DefenseAction { get; }
         public IReadOnlyList<BaseSkillAction> SkillActions { get; }
         public BaseSupportAction SupportAction { get; }
+        public BaseMoveAction MoveAction { get; }
 
         public BaseUnitAction UsedAction { get; }
 
         public BaseAttackAction SetAttackAction();
         public BaseSkillAction SetSkillAction(int index);
         public BaseDefenseAction SetDefeseAction();
-        public BaseSupportAction SeSupportAction();
+        public BaseSupportAction SetSupportAction();
+        public BaseMoveAction SetMoveAction();
 
     }
     public interface IUnitTileData

@@ -1,7 +1,8 @@
+using System.Linq;
 using CombTeen.Gameplay.Tile;
+using CombTeen.Gameplay.Unit.Action.Helper;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
@@ -10,16 +11,17 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
     {
         public override string ActionId => "A-ATK-000";
 
-        public override ITileArea ActionArea => new TileArea{
-            Up=1,
-            Down=1,
-            Left =1,
-            Right=1,
+        public override ITileArea ActionArea => new TileArea
+        {
+            Up = 1,
+            Down = 1,
+            Left = 1,
+            Right = 1,
 
-            DownLeft=1,
-            DownRight =1,
-            UpLeft=1,
-            UpRight=1
+            DownLeft = 1,
+            DownRight = 1,
+            UpLeft = 1,
+            UpRight = 1
         };
 
         protected override UniTask PreState()
@@ -33,17 +35,22 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            UILogger.Instance.LogSub($"{Owner.UnitBasicInfoData.UnitName} Deal Damge using Simple Attack to {TargetUnits.UnitBasicInfoData.UnitName}",true);
-
+            TargetUnits.ElementAt(0).UnitStatusData.ChangeCombatStatusAction.TakeDamage(10);
             return UniTask.Delay(500);
         }
 
-        public override BaseAttackAction InitializeOwner(CombatUnitControl owner)
+        public override BaseUnitAction InitializeOwner(CombatUnitControl owner)
         {
             return new SimpleAttackAction()
             {
                 Owner = owner
             };
+        }
+
+        public override async UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper)
+        {
+            var singleTarget = await targetChooseHelper.GetSingleTargetOpponentAsync(Owner);
+            TargetUnits = new CombatUnitControl[] { singleTarget };
         }
     }
 }

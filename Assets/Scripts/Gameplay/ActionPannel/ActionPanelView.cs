@@ -11,7 +11,9 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         public UnityEvent DefenseClickEvent { get; }
         public UnityEvent SupportClickEvent { get; }
         public UnityEvent<int> SkillClickEvent { get; }
+        public UnityEvent MoveClickEvent { get; }
 
+        void SetControlEnable(bool enable);
         public void SetVisual(string ownerName);
 
     }
@@ -21,12 +23,15 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         public UnityEvent DefenseClickEvent { private set; get; } = new UnityEvent();
         public UnityEvent SupportClickEvent { private set; get; } = new UnityEvent();
         public UnityEvent<int> SkillClickEvent { private set; get; } = new UnityEvent<int>();
+        public UnityEvent MoveClickEvent { get; } = new UnityEvent();
 
         [Header("HUD Component")]
+        [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private Button _attackButton;
         [SerializeField] private Button _defenseButton;
         [SerializeField] private Button _supportButton;
         [SerializeField] private Button[] _skillButtons;
+        [SerializeField] private Button _moveButton;
 
         [Header("Visual Information")]
         [SerializeField] private TextMeshProUGUI _ownerName;
@@ -40,6 +45,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             _attackButton.onClick.AddListener(() => AttackClickEvent?.Invoke());
             _defenseButton.onClick.AddListener(() => DefenseClickEvent?.Invoke());
             _supportButton.onClick.AddListener(() => SupportClickEvent?.Invoke());
+            _moveButton.onClick.AddListener(() => MoveClickEvent?.Invoke());
             for (int i = 0; i < _skillButtons.Length; i++)
             {
                 int index = i;
@@ -50,6 +56,13 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         public void SetVisual(string ownerName)
         {
             _ownerName.text = ownerName;
+        }
+
+        public void SetControlEnable(bool enable)
+        {
+            _canvasGroup.alpha = enable ? 1 : 0;
+            _canvasGroup.interactable = enable;
+            _canvasGroup.blocksRaycasts = enable;
         }
     }
 }

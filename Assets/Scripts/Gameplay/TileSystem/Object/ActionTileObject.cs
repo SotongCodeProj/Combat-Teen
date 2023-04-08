@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CombTeen.Gameplay.Unit.MVC;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CombTeen.Gameplay.Tile.Object
 {
@@ -10,24 +11,33 @@ namespace CombTeen.Gameplay.Tile.Object
         public CombatUnitControl OccupiedUnit { get; }
     }
 
-    public class ActionTileObject : TileObject, IActionTileData
+    public interface IClickableTile
+    {
+        UnityEvent<ActionTileObject> OnClickEvent {get;}
+    }
+
+    public class ActionTileObject : TileObject, IActionTileData, IClickableTile
     {
         private TileView _view;
         public string name => _view.name;
-        public ActionTileObject(TileView view)
+        public List<string> TileActionTags { private set; get; }
+        public override Vector3 TileWorldPosition => _view.transform.localPosition;
+        public CombatUnitControl OccupiedUnit { private set; get; }
+
+        public UnityEvent<ActionTileObject> OnClickEvent {private set;get;} = new UnityEvent<ActionTileObject>();
+
+         public ActionTileObject(TileView view)
         {
             _view = view;
         }
 
-        public List<string> TileActionTags { private set; get; }
-        public override Vector3 TileWorldPosition => _view.transform.localPosition;
-        public CombatUnitControl OccupiedUnit { private set; get; }
 
 
         public virtual void Initial(Vector2Int tileCoordinate, params string[] actionTags)
         {
             base.Initial(tileCoordinate);
             TileActionTags = new List<string>(actionTags);
+            _view.OnClickEvent.AddListener(()=> OnClickEvent?.Invoke(this));
         }
 
         public bool IsContainTag(string tag)
@@ -84,7 +94,6 @@ namespace CombTeen.Gameplay.Tile.Object
             OneOfIt,
             AllOfIt
         }
-
-
+        
     }
 }

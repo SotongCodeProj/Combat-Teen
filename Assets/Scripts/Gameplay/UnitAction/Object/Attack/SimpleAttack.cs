@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CombTeen.Gameplay.Unit.Action.Object
 {
-    public class SimpleAttack : SkillObject<BaseAttackAction>
+    public class SimpleAttack : ActionObject<BaseAttackAction>
     {
         public override BaseAttackAction Logic => new SimpleAttackAction();
     }

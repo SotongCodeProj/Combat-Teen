@@ -25,6 +25,7 @@ namespace CombTeen.Gameplay.State
 
         protected override UniTask PreState()
         {
+            _actionPanel.EnableControl(true);
             return UniTask.Delay(500);
         }
         protected override UniTask PostState()
@@ -37,11 +38,13 @@ namespace CombTeen.Gameplay.State
 
             for (int i = 0; i < _players.Count; i++)
             {
+                if (_players[i].UnitStatusData.CombatStat.Health <= 0) continue;
                 _actionPanel.InitUnitHandledUnit(_players[i]);
                 await UniTask.WaitUntil(_actionPanel.IsChooseDone);
             }
             for (int i = 0; i < _enemys.Count; i++)
             {
+                if (_enemys[i].UnitStatusData.CombatStat.Health <= 0) continue;
                 _actionPanel.InitUnitHandledUnit(_enemys[i]);
                 await UniTask.WaitUntil(_actionPanel.IsChooseDone);
             }

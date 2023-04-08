@@ -1,4 +1,7 @@
 
+using UnityEngine;
+using UnityEngine.Events;
+
 namespace CombTeen.Gameplay.Unit.Status
 {
     public class BaseUnitStat : IBasicStat
@@ -21,7 +24,7 @@ namespace CombTeen.Gameplay.Unit.Status
         public int Speed { private set; get; }
 
         public int Ap { private set; get; }
-        
+
         #endregion
     }
 
@@ -34,48 +37,96 @@ namespace CombTeen.Gameplay.Unit.Status
         public int Speed { private set; get; }
         public int Ap { private set; get; }
 
-        public void Set_Ap(int value)
+        public void AddAp(int value)
         {
             Ap = value;
         }
-        public void Set_Attack(int value)
+        public void AddAttack(int value)
         {
             Attack = value;
         }
-        public void Set_Defense(int value)
+        public void AddDefense(int value)
         {
             Defense = value;
         }
 
-        public void Set_Health(int value)
+        public void AddHealth(int value)
         {
             Health = value;
         }
 
-        public void Set_Speed(int value)
+        public void AddSpeed(int value)
         {
             Speed = value;
         }
         #endregion
     }
 
-    public class FinalUniStat : IBasicStat
+    public class FinalUnitStat : IBasicStat
     {
-        private BaseUnitStat baseUnitStat;
-        private DynamicUnitStat dynamicStat;
+        private BaseUnitStat _baseUnitStat;
+        private DynamicUnitStat _dynamicStat;
 
-        public FinalUniStat(BaseUnitStat baseUnitStat, DynamicUnitStat dynamicStat)
+        public FinalUnitStat(BaseUnitStat baseUnitStat, DynamicUnitStat dynamicStat)
         {
-            this.baseUnitStat = baseUnitStat;
-            this.dynamicStat = dynamicStat;
+            _baseUnitStat = baseUnitStat;
+            _dynamicStat = dynamicStat;
         }
 
-        public int Attack => baseUnitStat.Attack + dynamicStat.Attack;
-        public int Defense => baseUnitStat.Defense + dynamicStat.Defense;
-        public int Health => baseUnitStat.Health + dynamicStat.Health;
-        public int Speed => baseUnitStat.Speed + dynamicStat.Speed;
-        public int Ap => baseUnitStat.Ap + dynamicStat.Ap;
+        public int Attack => _baseUnitStat.Attack + _dynamicStat.Attack;
+        public int Defense => _baseUnitStat.Defense + _dynamicStat.Defense;
+        public int Health => _baseUnitStat.Health + _dynamicStat.Health;
+        public int Speed => _baseUnitStat.Speed + _dynamicStat.Speed;
+        public int Ap => _baseUnitStat.Ap + _dynamicStat.Ap;
+
+
     }
 
-    public interface IUnitModifAction : IBasicStat_ModifAction{}
+    public class CombatUnitStat : IBasicStat,
+    IUnitCombatStatModifAction
+    {
+        private FinalUnitStat _ancorStat;
+
+        public int Attack { private set; get; }
+        public int Defense { private set; get; }
+        public int Health { private set; get; }
+        public int Speed { private set; get; }
+        public int Ap { private set; get; }
+
+
+        public CombatUnitStat(FinalUnitStat ancorStat)
+        {
+            _ancorStat = ancorStat;
+
+            Attack = ancorStat.Attack;
+            Defense = ancorStat.Defense;
+            Health = ancorStat.Health;
+            Speed = ancorStat.Speed;
+            Ap = ancorStat.Ap;
+        }
+        #region  Modif Action
+        public UnityEvent<int> AfterTakeDamageEvent { private set; get; } = new UnityEvent<int>();
+        public UnityEvent<int> AfterAddHealthEvent { private set; get; } = new UnityEvent<int>();
+        public void TakeDamage(int value)
+        {
+            Health -= Mathf.Clamp(value, 1, int.MaxValue);
+            AfterTakeDamageEvent?.Invoke(Health);
+        }
+        public void AddHealth(int value)
+        {
+            Health += Mathf.Clamp(value, 1, int.MaxValue);
+            AfterAddHealthEvent?.Invoke(Health);
+        }
+        #endregion
+    }
+
+    public interface IUnitModifAction : IBasicStat_ModifAction { }
+    public interface IUnitCombatStatModifAction
+    {
+        public UnityEvent<int> AfterTakeDamageEvent { get; }
+        public UnityEvent<int> AfterAddHealthEvent { get; }
+
+        void AddHealth(int value);
+        public void TakeDamage(int value);
+    }
 }

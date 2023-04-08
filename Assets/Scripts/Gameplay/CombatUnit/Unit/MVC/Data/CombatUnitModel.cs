@@ -20,8 +20,15 @@ namespace CombTeen.Gameplay.Unit.MVC
         #region  Status
         private BaseUnitStat BaseUnitSatus;
         private DynamicUnitStat DynamicUnitStatus;
-        public IUnitModifAction ModifStatusAction => DynamicUnitStatus;
-        public FinalUniStat FinalStatus { private set; get; }
+        private FinalUnitStat FinalStatus;
+        private CombatUnitStat CombatStatus;
+
+        public IUnitModifAction ChangeBaseParameterAction => DynamicUnitStatus;
+        public IUnitCombatStatModifAction ChangeCombatStatusAction => CombatStatus;
+
+        public IBasicStat BaseStatus => FinalStatus;
+        public IBasicStat CombatStat => CombatStatus;
+
         public void InitializeStat(IBasicStat basicStat)
         {
             BaseUnitSatus = new BaseUnitStat(
@@ -33,26 +40,32 @@ namespace CombTeen.Gameplay.Unit.MVC
             );
             DynamicUnitStatus = new DynamicUnitStat();
 
-            FinalStatus = new FinalUniStat(BaseUnitSatus, DynamicUnitStatus);
+            FinalStatus = new FinalUnitStat(BaseUnitSatus, DynamicUnitStatus);
+
+            CombatStatus = new CombatUnitStat(FinalStatus);
         }
 
         #endregion
+
         #region  Action
         public BaseAttackAction AttackAction { private set; get; }
         public BaseDefenseAction DefenseAction { private set; get; }
         public IReadOnlyList<BaseSkillAction> SkillActions { private set; get; }
         public BaseSupportAction SupportAction { private set; get; }
+        public BaseMoveAction MoveAction { private set; get; }
 
         public BaseUnitAction UsedAction { private set; get; }
 
         public void InitializeAction(BaseAttackAction attack,
                                BaseDefenseAction defense,
                                BaseSupportAction supportAction,
-                               BaseSkillAction[] skillActions)
+                               BaseSkillAction[] skillActions,
+                               BaseMoveAction moveAction)
         {
             AttackAction = attack;
             DefenseAction = defense;
             SupportAction = supportAction;
+            MoveAction = moveAction;
             SkillActions = new List<BaseSkillAction>(skillActions);
         }
 
@@ -71,10 +84,15 @@ namespace CombTeen.Gameplay.Unit.MVC
             UsedAction = DefenseAction;
             return DefenseAction;
         }
-        public BaseSupportAction SeSupportAction()
+        public BaseSupportAction SetSupportAction()
         {
             UsedAction = SupportAction;
             return SupportAction;
+        }
+         public BaseMoveAction SetMoveAction()
+        {
+            UsedAction = MoveAction;
+            return MoveAction;
         }
 
 

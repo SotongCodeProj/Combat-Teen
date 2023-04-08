@@ -59,19 +59,9 @@ public class TestRunner : MonoBehaviour
 
 
     [Button]
-    private async void Run()
+    private void Run()
     {
-        _keepRun = true;
-        await _runner.BeginProcess();
-
-        while (_keepRun)
-        {
-            await _runner.LoopProcess();
-            await UniTask.WaitUntil(() => _runner._doneLoopState);
-            _runner.Next();
-        }
-
-        await _runner.EndProcess();
+        _runner.RunAsync().Forget();
     }
 
     [Button]
