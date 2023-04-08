@@ -47,10 +47,17 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             };
         }
 
-        public override async UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper)
+        public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
         {
-            var singleTarget = await targetChooseHelper.GetSingleTargetOpponentAsync(Owner);
-            TargetUnits = new CombatUnitControl[] { singleTarget };
+            targetChooseHelper.OnSelectTargets.RemoveAllListeners();
+            targetChooseHelper.OnSelectTargets.AddListener(
+            (targets) =>
+            {
+                TargetUnits = targets;
+            });
+            
+            targetChooseHelper.GetSingleTargetOpponent(Owner);
+            
         }
     }
 }

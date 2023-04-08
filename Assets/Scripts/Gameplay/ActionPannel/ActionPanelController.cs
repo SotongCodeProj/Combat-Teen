@@ -1,19 +1,20 @@
+using System.Threading;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit;
+using CombTeen.Gameplay.Unit.Action;
 using CombTeen.Gameplay.Unit.Action.Helper;
 using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using VContainer.Unity;
 
 namespace CombTeen.Gameplay.Screen.ActionPanel
 {
     public interface IActionPanelControl
     {
-        public void InitUnitHandledUnit(CombatUnitControl selectedUnit);
-        public bool IsChooseDone();
-
         public void EnableControl(bool enable);
+        UniTask<BaseUnitAction> GetUnitActionAsync(CombatUnitControl unit);
     }
     public class ActionPanelController : IActionPanelControl, IStartable
     {
@@ -22,8 +23,8 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private CombatUnitsHandler _unitsHandler;
         private ITileController _tileControl;
         private TargetChooseHelper _targetChooseHelper;
+        private UnityEvent<BaseUnitAction> _selectedAction = new UnityEvent<BaseUnitAction>();
 
-        private bool _isChooseDone = false;
         public ActionPanelController(IActionPanelView view,
                                      CombatUnitsHandler combatUnitHandler,
                                      ITileController tileController,
@@ -43,67 +44,58 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private void InitViewEvent()
         {
 
-            _view.AttackClickEvent.AddListener(() => SetAttackActionAsync().Forget());
-            _view.DefenseClickEvent.AddListener(() => SetDefenseActionAsycn().Forget());
-            _view.SupportClickEvent.AddListener(() => SetSupportActionAsync().Forget());
-            _view.SkillClickEvent.AddListener((slotIndex) => SetSkillActionAsync(slotIndex).Forget());
-            _view.MoveClickEvent.AddListener(() => SetMoveActionAsync().Forget());
+            _view.AttackClickEvent.AddListener(SetAttackAction);
+            _view.DefenseClickEvent.AddListener(SetDefenseAction);
+            _view.SupportClickEvent.AddListener(SetSupportAction);
+            _view.SkillClickEvent.AddListener(SetSkillAction);
+            _view.MoveClickEvent.AddListener(SetMoveAction);
         }
 
-        private async UniTaskVoid SetAttackActionAsync()
+        private void SetAttackAction()
         {
-            Debug.Log("Choose Attack");
-            await _currentUnit.UnitActionData.SetAttackAction()
-             .SetUnitTargets(_targetChooseHelper);
-
-            _tileControl.ClearShowTile();
-            _isChooseDone = true;
-        }
-        private async UniTaskVoid SetDefenseActionAsycn()
-        {
-            await _currentUnit.UnitActionData.SetDefeseAction()
+            Debug.Log($"Choose Attack : {_currentUnit.UnitBasicInfoData.UnitName}");
+            _currentUnit.UnitActionData.SetAttackAction()
             .SetUnitTargets(_targetChooseHelper);
-            _tileControl.ClearShowTile();
-            _isChooseDone = true;
         }
-        private async UniTaskVoid SetSupportActionAsync()
+        private void SetDefenseAction()
         {
-            await _currentUnit.UnitActionData.SetSupportAction()
+            Debug.Log($"Choose Defense : {_currentUnit.UnitBasicInfoData.UnitName}");
+            _currentUnit.UnitActionData.SetDefeseAction()
             .SetUnitTargets(_targetChooseHelper);
-
-            _tileControl.ClearShowTile();
-            _isChooseDone = true;
         }
-
-        private async UniTaskVoid SetSkillActionAsync(int indexSlot)
+        private void SetSupportAction()
         {
-            await _currentUnit.UnitActionData.SetSkillAction(indexSlot)
+            Debug.Log($"Choose Support : {_currentUnit.UnitBasicInfoData.UnitName}");
+            _currentUnit.UnitActionData.SetSupportAction()
             .SetUnitTargets(_targetChooseHelper);
-
-            _tileControl.ClearShowTile();
-            _isChooseDone = true;
         }
-        private async UniTaskVoid SetMoveActionAsync()
+        private void SetSkillAction(int indexSlot)
         {
-            await _currentUnit.UnitActionData.SetMoveAction()
+            Debug.Log($"Choose Skill : {_currentUnit.UnitBasicInfoData.UnitName}");
+            _currentUnit.UnitActionData.SetSkillAction(indexSlot)
             .SetUnitTargets(_targetChooseHelper);
+        }
+        private void SetMoveAction()
+        {
+            Debug.Log($"Choose Move : {_currentUnit.UnitBasicInfoData.UnitName}");
+            _currentUnit.UnitActionData.SetMoveAction()
+            .SetUnitTargets(_targetChooseHelper);
+        }
+        public async UniTask<BaseUnitAction> GetUnitActionAsync(CombatUnitControl unit)
+        {
+            var cts = new CancellationTokenSource();
+            _view.SetControlEnable(true);
+
+            _currentUnit = unit;
+            _view.SetVisual(unit.UnitBasicInfoData.UnitName);
+
+            await _targetChooseHelper.OnClickEvent.OnInvokeAsync(cts.Token);
 
             _tileControl.ClearShowTile();
-            _isChooseDone = true;
-        }
+            _view.SetControlEnable(false);
+            return _currentUnit.UnitActionData.UsedAction;
 
-        public void InitUnitHandledUnit(CombatUnitControl selectedUnit)
-        {
-            _currentUnit = selectedUnit;
-            _view.SetVisual(selectedUnit.UnitBasicInfoData.UnitName);
-            _isChooseDone = false;
         }
-
-        public bool IsChooseDone()
-        {
-            return _isChooseDone;
-        }
-
         public void EnableControl(bool enable)
         {
             _view.SetControlEnable(enable);

@@ -18,17 +18,17 @@ namespace CombTeen.Gameplay.StateRunner
 
         public BasicCombatRunner(BasicStartBattleState startBattle,
 
-                                PlayerChooseActionState playerChooseAction,
-                                CalculateActionOrderState calculateAction,
-                                PlayUnitActionState playUnitAction,
+                                UnitsActionState playerChooseAction,
+                                // CalculateActionOrderState calculateAction,
+                                // PlayUnitActionState playUnitAction,
                                 CheckBattleStatusState checkBattleStatus,
 
                                 BasicEndBattleState endBattle)
         {
             Data = new BasicCombatModel(startBattle,
                                         playerChooseAction,
-                                        calculateAction,
-                                        playUnitAction,
+                                        // calculateAction,
+                                        // playUnitAction,
                                         checkBattleStatus,
                                         endBattle);
             checkBattleStatus.OnBattleDone.AddListener(Terminate);

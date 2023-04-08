@@ -43,6 +43,8 @@ namespace CombTeen.Gameplay.Unit.MVC
         }
         public void SetLocation(ActionTileObject targetTile)
         {
+            if (targetTile == null) return;
+            
             TileControl.SetOccupiedTile(targetTile, Data.CurrentTile, this);
             Data.SetWorldPosition(targetTile);
             Data.SetUnitOccupiedTile(targetTile);

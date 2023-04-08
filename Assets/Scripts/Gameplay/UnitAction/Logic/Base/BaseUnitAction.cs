@@ -33,7 +33,7 @@ namespace CombTeen.Gameplay.Unit.Action
         protected abstract UniTask ProcessState();
         protected abstract UniTask PostState();
 
-        public abstract UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper);
+        public abstract void SetUnitTargets(TargetChooseHelper targetChooseHelper);
         public abstract BaseUnitAction InitializeOwner(CombatUnitControl owner);
 
         public virtual ValueTask DisposeAsync()

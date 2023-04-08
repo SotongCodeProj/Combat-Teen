@@ -33,10 +33,15 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             };
         }
 
-        public override async UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper)
+        public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
         {
-            var target = await targetChooseHelper.GetSelfTargetAsync(Owner);
-            TargetUnits = new[] { target };
+            targetChooseHelper.OnSelectTargets.RemoveAllListeners();
+            targetChooseHelper.OnSelectTargets.AddListener(
+            (targets) =>
+            {
+                TargetUnits = targets;
+            });
+            targetChooseHelper.GetSelfTarget(Owner);
         }
     }
 }

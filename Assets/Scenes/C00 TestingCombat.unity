@@ -8225,17 +8225,12 @@ MonoBehaviour:
   _monobehavScripts: []
   _turnBaseComponents:
     RunnerScript: {fileID: 11500000, guid: 0296c8f12318d4d42b37a1b1e75a3451, type: 3}
-    ModelScript: {fileID: 11500000, guid: 47bc5aedb2a37418ca0bcba153cb8cbe, type: 3}
     States:
     - Bridge: {fileID: 11500000, guid: 7ec7008f69b9942948ef0073e36e3adf, type: 3}
       AdditionalComponents: []
     - Bridge: {fileID: 11500000, guid: 2ff195dc59cc347b78092725448556e1, type: 3}
       AdditionalComponents: []
-    - Bridge: {fileID: 11500000, guid: 04e3b5a8f837541769ca0eb103b0d7e9, type: 3}
-      AdditionalComponents: []
     - Bridge: {fileID: 11500000, guid: 6e8339f984a9143f393640675b608ca0, type: 3}
-      AdditionalComponents: []
-    - Bridge: {fileID: 11500000, guid: 73996ef0982fe4d439d2d696c61a55b5, type: 3}
       AdditionalComponents: []
     - Bridge: {fileID: 11500000, guid: 2b74a2a3f17f2479b95ccb1747233fa3, type: 3}
       AdditionalComponents: []

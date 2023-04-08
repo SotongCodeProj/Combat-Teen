@@ -22,12 +22,12 @@ namespace CombTeen.Gameplay.State
         }
         protected override UniTask PostState()
         {
-            return UniTask.Delay(500);
+            return UniTask.CompletedTask;
         }
 
         protected override UniTask PreState()
         {
-            return UniTask.Delay(500);
+            return UniTask.CompletedTask;
         }
 
         protected override UniTask ProcessState()

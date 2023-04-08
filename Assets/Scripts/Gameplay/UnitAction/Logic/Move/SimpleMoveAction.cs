@@ -1,3 +1,4 @@
+using System.Linq;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Tile.Object;
 using CombTeen.Gameplay.Unit.Action.Helper;
@@ -48,11 +49,15 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
                 Owner = owner
             };
         }
-        public override async UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper)
+        public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
         {
-            _selectedTile = await targetChooseHelper.GetTileWithoutUnitAsync(Owner);
-            Debug.Log($"Player{Owner.UnitBasicInfoData.UnitName} Move to {_selectedTile.name}");
-            Owner.SetLocation(_selectedTile);
+            targetChooseHelper.OnSelectTiles.RemoveAllListeners();
+            targetChooseHelper.OnSelectTiles.AddListener(
+            (selectedTiles) =>
+            {
+                _selectedTile = selectedTiles.ElementAt(0);
+            });
+            targetChooseHelper.GetTileWithoutUnit(Owner);
         }
     }
 }

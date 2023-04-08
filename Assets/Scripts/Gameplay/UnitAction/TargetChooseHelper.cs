@@ -3,7 +3,7 @@ using CombTeen.Gameplay.Unit.MVC;
 using System.Collections.Generic;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Tile.Object;
-using System.Threading;
+using UnityEngine.Events;
 
 namespace CombTeen.Gameplay.Unit.Action.Helper
 {
@@ -11,6 +11,9 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
     {
         private ITileController _tileControl;
         private CombatUnitsHandler _unitHandler;
+        public UnityEvent<IEnumerable<CombatUnitControl>> OnSelectTargets { private set; get; } = new UnityEvent<IEnumerable<CombatUnitControl>>();
+        public UnityEvent<IEnumerable<ActionTileObject>> OnSelectTiles { private set; get; } = new UnityEvent<IEnumerable<ActionTileObject>>();
+        public UnityEvent OnClickEvent { private set; get; } = new UnityEvent();
 
         public TargetChooseHelper(ITileController tileController, CombatUnitsHandler unitHandler)
         {
@@ -18,30 +21,22 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             _unitHandler = unitHandler;
         }
 
-        public async UniTask<CombatUnitControl> GetSelfTargetAsync(CombatUnitControl requester)
+        public void GetSelfTarget(CombatUnitControl requester)
         {
-            using var baseCts = new CancellationTokenSource();
-            CombatUnitControl target = null;
 
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
               requester.UnitActionData.UsedAction.ActionArea);
 
-            baseCts.Token.ThrowIfCancellationRequested();
             requester.UnitTileData.CurrentTile.OnClickEvent.AddListener((selectedTile) =>
             {
-                target = selectedTile.OccupiedUnit;
+                OnSelectTargets?.Invoke(new[] { selectedTile.OccupiedUnit });
+                OnClickEvent?.Invoke();
             });
-            var process = requester.UnitTileData.CurrentTile.OnClickEvent.OnInvokeAsync(baseCts.Token);
-
-            await UniTask.WhenAny(process).SuppressCancellationThrow();
-            return target;
         }
-        public async UniTask<CombatUnitControl> GetSingleTargetAllyAsync(CombatUnitControl requester)
-        {
-            using var baseCts = new CancellationTokenSource();
-            CombatUnitControl target = null;
 
+        public void GetSingleTargetAlly(CombatUnitControl requester)
+        {
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
               requester.UnitActionData.UsedAction.ActionArea,
@@ -49,36 +44,27 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
 
             List<UniTask> process = new List<UniTask>();
 
-            baseCts.Token.ThrowIfCancellationRequested();
             foreach (var item in clickAbleTile)
             {
                 var detectedUnit = item.OccupiedUnit;
                 if (_unitHandler.IsAlly(requester, detectedUnit))
                 {
                     item.OnClickEvent.AddListener((selectedTile) =>
-                    {
-                        target = selectedTile.OccupiedUnit;
-
-                    });
-                    process.Add(item.OnClickEvent.OnInvokeAsync(baseCts.Token));
+                   {
+                       OnSelectTargets?.Invoke(new[] { selectedTile.OccupiedUnit });
+                       OnClickEvent?.Invoke();
+                   });
                 }
             }
-            await UniTask.WhenAny(process).SuppressCancellationThrow();
-            return target;
         }
-        public async UniTask<CombatUnitControl> GetSingleTargetOpponentAsync(CombatUnitControl requester)
+        public void GetSingleTargetOpponent(CombatUnitControl requester)
         {
-            using var baseCts = new CancellationTokenSource();
-            CombatUnitControl target = null;
-
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
               requester.UnitActionData.UsedAction.ActionArea,
               out IEnumerable<ActionTileObject> clickAbleTile);
 
             List<UniTask> process = new List<UniTask>();
-
-            baseCts.Token.ThrowIfCancellationRequested();
             foreach (var item in clickAbleTile)
             {
                 var detectedUnit = item.OccupiedUnit;
@@ -86,42 +72,29 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
                 {
                     item.OnClickEvent.AddListener((selectedTile) =>
                     {
-                        target = selectedTile.OccupiedUnit;
-
+                        OnSelectTargets?.Invoke(new[] { selectedTile.OccupiedUnit });
+                        OnClickEvent?.Invoke();
                     });
-                    process.Add(item.OnClickEvent.OnInvokeAsync(baseCts.Token));
                 }
             }
-            await UniTask.WhenAny(process).SuppressCancellationThrow();
-            return target;
         }
 
-        public async UniTask<ActionTileObject> GetTileWithoutUnitAsync(CombatUnitControl requester)
+        public void GetTileWithoutUnit(CombatUnitControl requester)
         {
-            using var baseCts = new CancellationTokenSource();
-            ActionTileObject target = null;
-
             _tileControl.ShowTileArea(
             requester.UnitTileData.Coordinate,
             requester.UnitActionData.UsedAction.ActionArea,
             out IEnumerable<ActionTileObject> clickAbleTile);
 
-            List<UniTask> process = new List<UniTask>();
-
-            baseCts.Token.ThrowIfCancellationRequested();
             foreach (var item in clickAbleTile)
             {
                 if (item.OccupiedUnit != null) continue;
-                
                 item.OnClickEvent.AddListener((selectedTile) =>
                 {
-                    target = selectedTile;
+                    OnSelectTiles?.Invoke(new[] { selectedTile });
+                    OnClickEvent?.Invoke();
                 });
-                process.Add(item.OnClickEvent.OnInvokeAsync(baseCts.Token));
             }
-
-            await UniTask.WhenAny(process).SuppressCancellationThrow();
-            return target;
         }
     }
 }
