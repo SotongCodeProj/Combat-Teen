@@ -40,7 +40,7 @@ namespace CombTeen.Gameplay.State
         }
         protected override UniTask PostState()
         {
-            return UniTask.Delay(500);
+            return UniTask.CompletedTask;
         }
         protected override async UniTask ProcessState()
         {
@@ -48,6 +48,7 @@ namespace CombTeen.Gameplay.State
             {
                 if (unit.UnitStatusData.CombatStat.Health <= 0) continue;
 
+                Debug.Log($"Unit Do Action : {unit.UnitBasicInfoData.UnitName}");
                 await using (var action = await _actionPanel.GetUnitActionAsync(unit))
                 {
                     await action.PreProcess;
@@ -56,6 +57,7 @@ namespace CombTeen.Gameplay.State
 
                     Debug.Log($"End Action : {unit.UnitBasicInfoData.UnitName} | {action.ActionId}");
                     _actionPanel.EnableControl(false);
+                    await UniTask.Delay(500);
                 }
             }
         }

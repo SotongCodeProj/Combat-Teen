@@ -15,10 +15,14 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
         public UnityEvent<IEnumerable<ActionTileObject>> OnSelectTiles { private set; get; } = new UnityEvent<IEnumerable<ActionTileObject>>();
         public UnityEvent OnClickEvent { private set; get; } = new UnityEvent();
 
+        private List<ActionTileObject> _currentTile = new List<ActionTileObject>();
+
         public TargetChooseHelper(ITileController tileController, CombatUnitsHandler unitHandler)
         {
             _tileControl = tileController;
             _unitHandler = unitHandler;
+
+            OnClickEvent.AddListener(ClearClickTileEvent);
         }
 
         public void GetSelfTarget(CombatUnitControl requester)
@@ -33,6 +37,8 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
                 OnSelectTargets?.Invoke(new[] { selectedTile.OccupiedUnit });
                 OnClickEvent?.Invoke();
             });
+
+            _currentTile.Add(requester.UnitTileData.CurrentTile);
         }
 
         public void GetSingleTargetAlly(CombatUnitControl requester)
@@ -56,6 +62,7 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
                    });
                 }
             }
+            _currentTile.AddRange(clickAbleTile);
         }
         public void GetSingleTargetOpponent(CombatUnitControl requester)
         {
@@ -77,6 +84,7 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
                     });
                 }
             }
+            _currentTile.AddRange(clickAbleTile);
         }
 
         public void GetTileWithoutUnit(CombatUnitControl requester)
@@ -95,6 +103,16 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
                     OnClickEvent?.Invoke();
                 });
             }
+            _currentTile.AddRange(clickAbleTile);
+        }
+
+        private void ClearClickTileEvent()
+        {
+            foreach (var tile in _currentTile)
+            {
+                tile.OnClickEvent.RemoveAllListeners();
+            }
+            _currentTile.Clear();
         }
     }
 }

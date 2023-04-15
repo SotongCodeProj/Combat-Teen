@@ -93,6 +93,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
 
             _tileControl.ClearShowTile();
             _view.SetControlEnable(false);
+            cts.Dispose();
             return _currentUnit.UnitActionData.UsedAction;
 
         }
