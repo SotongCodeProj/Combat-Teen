@@ -1,3 +1,4 @@
+using CombTeen.Gameplay.StateRunner;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.Action.Helper;
 using CombTeen.Gameplay.Unit.MVC;
@@ -5,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine.Events;
 
 namespace CombTeen.Gameplay.Unit.Action
 {
@@ -20,6 +22,7 @@ namespace CombTeen.Gameplay.Unit.Action
     public abstract class BaseUnitAction : IUnitAction
     {
         public CombatUnitControl Owner { protected set; get; }
+        protected UnityEvent<int> OnChangeTurn { private set; get; }
         public abstract string ActionId { get; }
         public IEnumerable<CombatUnitControl> TargetUnits { protected set; get; }
 
@@ -34,9 +37,14 @@ namespace CombTeen.Gameplay.Unit.Action
         protected abstract UniTask PostState();
 
         public abstract void SetUnitTargets(TargetChooseHelper targetChooseHelper);
-        public BaseUnitAction InitializeOwner(CombatUnitControl owner){
+        public BaseUnitAction InitializeOwner(CombatUnitControl owner)
+        {
             Owner = owner;
             return this;
+        }
+        public void InitializeChangeTurnEvent(UnityEvent<int> ChangeTurnEvent)
+        {
+            OnChangeTurn = ChangeTurnEvent;
         }
 
         public virtual ValueTask DisposeAsync()

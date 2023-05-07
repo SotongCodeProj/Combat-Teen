@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using TBS.Core;
 using TBS.Core.Runner;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CombTeen.Gameplay.StateRunner
 {
@@ -14,21 +15,20 @@ namespace CombTeen.Gameplay.StateRunner
         public int LoopIndex { private set; get; } = 0;
         public BasicCombatModel Data { protected set; get; }
         public bool DoneLoopState { private set; get; } = false;
+        public UnityEvent<int> OnChangeNextTurn { get; private set; } = new UnityEvent<int>();
+
         private bool _keepRun = false;
+        private int _currentTurnAmount = 0;
 
         public BasicCombatRunner(BasicStartBattleState startBattle,
 
                                 UnitsActionState playerChooseAction,
-                                // CalculateActionOrderState calculateAction,
-                                // PlayUnitActionState playUnitAction,
                                 CheckBattleStatusState checkBattleStatus,
 
                                 BasicEndBattleState endBattle)
         {
             Data = new BasicCombatModel(startBattle,
                                         playerChooseAction,
-                                        // calculateAction,
-                                        // playUnitAction,
                                         checkBattleStatus,
                                         endBattle);
             checkBattleStatus.OnBattleDone.AddListener(Terminate);
@@ -56,9 +56,14 @@ namespace CombTeen.Gameplay.StateRunner
         public void Next()
         {
             if (!_currentState.Equals(TBS_State.Loop) || !DoneLoopState) { Debug.LogWarning("Error whenNext"); return; }
-            LoopIndex = (LoopIndex + 1) >= Data.LoopStates.Count() ?
-                            0 : LoopIndex + 1;
-
+            if (LoopIndex + 1 >= Data.LoopStates.Count())
+            {
+                OnChangeNextTurn?.Invoke(_currentTurnAmount);
+            }
+            else
+            {
+                LoopIndex++;
+            }
         }
 
         private async UniTask BeginProcess()

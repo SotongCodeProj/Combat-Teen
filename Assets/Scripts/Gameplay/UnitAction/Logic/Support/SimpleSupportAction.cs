@@ -1,6 +1,5 @@
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.Action.Helper;
-using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
@@ -22,7 +21,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 
         protected override UniTask ProcessState()
         {
-            Owner.UnitStatusData.ChangeCombatStatusAction.AddHealth(10);
+            Owner.UnitStatusData.ChangeCombatStatusAction.AddHealth(1);
             return UniTask.Delay(500);
         }
 

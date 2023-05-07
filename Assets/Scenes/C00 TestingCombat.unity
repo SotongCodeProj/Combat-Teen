@@ -165,7 +165,7 @@ MonoBehaviour:
     DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
     SkillsAction:
     - {fileID: -6146999445824223425, guid: 1ce31ad4a339347f0b15ed325b79fd1f, type: 3}
-    SupportAction: {fileID: 6510973322379724648, guid: 958b06d8d7b094d83953c87673f96e27, type: 3}
+    SupportAction: {fileID: -9137983319243096502, guid: 4a2be3c7f72784c5f9a881ddf486f6ac, type: 3}
     MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
   - CharacterId: U-PLAYER-02
     CharacterName: PLAYER 2
@@ -179,7 +179,7 @@ MonoBehaviour:
     DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
     SkillsAction:
     - {fileID: 2929148977574579564, guid: fbc97a72a476140d1b3752e3b68fe16b, type: 3}
-    SupportAction: {fileID: 6510973322379724648, guid: 958b06d8d7b094d83953c87673f96e27, type: 3}
+    SupportAction: {fileID: -9137983319243096502, guid: 4a2be3c7f72784c5f9a881ddf486f6ac, type: 3}
     MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
   - CharacterId: U-PLAYER-03
     CharacterName: PLAYER 3
@@ -193,7 +193,7 @@ MonoBehaviour:
     DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
     SkillsAction:
     - {fileID: 7513317853579531361, guid: 9b248b14e1d104799980a567864b7b9e, type: 3}
-    SupportAction: {fileID: 6510973322379724648, guid: 958b06d8d7b094d83953c87673f96e27, type: 3}
+    SupportAction: {fileID: 7637067741550725073, guid: d02a816f67a154713b9c73dcada2005c, type: 3}
     MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
   EnemysData:
   - CharacterId: U-ENEMY-01
@@ -208,7 +208,7 @@ MonoBehaviour:
     DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
     SkillsAction:
     - {fileID: -6146999445824223425, guid: 1ce31ad4a339347f0b15ed325b79fd1f, type: 3}
-    SupportAction: {fileID: 6510973322379724648, guid: 958b06d8d7b094d83953c87673f96e27, type: 3}
+    SupportAction: {fileID: 7637067741550725073, guid: d02a816f67a154713b9c73dcada2005c, type: 3}
     MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
   - CharacterId: U-ENEMY-02
     CharacterName: ENEMY 2
@@ -222,7 +222,7 @@ MonoBehaviour:
     DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
     SkillsAction:
     - {fileID: 7513317853579531361, guid: 9b248b14e1d104799980a567864b7b9e, type: 3}
-    SupportAction: {fileID: 6510973322379724648, guid: 958b06d8d7b094d83953c87673f96e27, type: 3}
+    SupportAction: {fileID: 7637067741550725073, guid: d02a816f67a154713b9c73dcada2005c, type: 3}
     MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
   - CharacterId: U-ENEMY-03
     CharacterName: ENEMY 3
@@ -236,7 +236,7 @@ MonoBehaviour:
     DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
     SkillsAction:
     - {fileID: 2929148977574579564, guid: fbc97a72a476140d1b3752e3b68fe16b, type: 3}
-    SupportAction: {fileID: 6510973322379724648, guid: 958b06d8d7b094d83953c87673f96e27, type: 3}
+    SupportAction: {fileID: -9137983319243096502, guid: 4a2be3c7f72784c5f9a881ddf486f6ac, type: 3}
     MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
 --- !u!4 &1338730
 Transform:

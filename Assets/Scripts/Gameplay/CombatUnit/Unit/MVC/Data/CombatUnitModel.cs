@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CombTeen.Gameplay.Tile.Object;
 using CombTeen.Gameplay.Unit.Action;
@@ -6,6 +5,7 @@ using CombTeen.Gameplay.Unit.Action.Logic;
 using CombTeen.Gameplay.Unit.MVC.Data;
 using CombTeen.Gameplay.Unit.Status;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace CombTeen.Gameplay.Unit.MVC
 {
@@ -60,13 +60,24 @@ namespace CombTeen.Gameplay.Unit.MVC
                                BaseDefenseAction defense,
                                BaseSupportAction supportAction,
                                BaseSkillAction[] skillActions,
-                               BaseMoveAction moveAction)
+                               BaseMoveAction moveAction,
+
+                               UnityEvent<int> ChangeTurnEvent)
         {
             AttackAction = attack;
             DefenseAction = defense;
             SupportAction = supportAction;
             MoveAction = moveAction;
             SkillActions = new List<BaseSkillAction>(skillActions);
+
+            AttackAction.InitializeChangeTurnEvent(ChangeTurnEvent);
+            DefenseAction.InitializeChangeTurnEvent(ChangeTurnEvent);
+            SupportAction.InitializeChangeTurnEvent(ChangeTurnEvent);
+
+            foreach (var skill in SkillActions)
+            {
+                skill.InitializeChangeTurnEvent(ChangeTurnEvent);
+            }
         }
 
         public BaseAttackAction SetAttackAction()
@@ -89,7 +100,7 @@ namespace CombTeen.Gameplay.Unit.MVC
             UsedAction = SupportAction;
             return SupportAction;
         }
-         public BaseMoveAction SetMoveAction()
+        public BaseMoveAction SetMoveAction()
         {
             UsedAction = MoveAction;
             return MoveAction;

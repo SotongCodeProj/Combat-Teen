@@ -11,12 +11,6 @@ namespace CombTeen.Gameplay.Unit
     {
         public override string UnitId => "Player";
 
-        [Inject]
-        public void Inject(ITileController tileController)
-        {
-            TileControl = tileController;
-        }
-
         public override void InitialUnitData(CharacterData Character)
         {
             base.InitialUnitData(Character);

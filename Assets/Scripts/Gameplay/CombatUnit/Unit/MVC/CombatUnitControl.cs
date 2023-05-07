@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using CombTeen.Gameplay.DataTransport.TestData;
+using CombTeen.Gameplay.StateRunner;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Tile.Object;
 using CombTeen.Gameplay.Unit.Action.Logic;
 using CombTeen.Gameplay.Unit.MVC.Data;
+using VContainer;
 
 namespace CombTeen.Gameplay.Unit.MVC
 {
@@ -13,13 +15,22 @@ namespace CombTeen.Gameplay.Unit.MVC
         protected CombatUnitModel Data = new CombatUnitModel();
         protected CombatUnitView View;
         protected CombatUnitIndicatorView StatusIndicator;
+
         protected ITileController TileControl;
+        protected BasicCombatRunner CombatRunner;
 
         public string viewName => View.name;
         public IUnitBasicInfoData UnitBasicInfoData => Data;
         public IUnitTileData UnitTileData => Data;
         public IUnitStatusData UnitStatusData => Data;
         public IUnitActionData UnitActionData => Data;
+
+        [Inject]
+        public void Inject(ITileController tileController, BasicCombatRunner combatRunner)
+        {
+            TileControl = tileController;
+            CombatRunner = combatRunner;
+        }
 
         public virtual void InitialUnitData(CharacterData Character)
         {
@@ -35,7 +46,9 @@ namespace CombTeen.Gameplay.Unit.MVC
                                   (BaseDefenseAction)Character.DefenseAction.Logic.InitializeOwner(this),
                                   (BaseSupportAction)Character.SupportAction.Logic.InitializeOwner(this),
                                    skills.ToArray(),
-                                  (BaseMoveAction)Character.MoveAction.Logic.InitializeOwner(this));
+                                  (BaseMoveAction)Character.MoveAction.Logic.InitializeOwner(this),
+                                  
+                                  CombatRunner.OnChangeNextTurn);
 
             Data.InitializeStat(Character.BasicStatus);
 
@@ -44,7 +57,7 @@ namespace CombTeen.Gameplay.Unit.MVC
         public void SetLocation(ActionTileObject targetTile)
         {
             if (targetTile == null) return;
-            
+
             TileControl.SetOccupiedTile(targetTile, Data.CurrentTile, this);
             Data.SetWorldPosition(targetTile);
             Data.SetUnitOccupiedTile(targetTile);

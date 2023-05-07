@@ -1,13 +1,12 @@
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.Action.Helper;
-using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
-    public class SimpleSupBuffAction: BaseSupportAction
+    public class SupHealAction : BaseSupportAction
     {
-        public override string ActionId => "A-SPT-000";
+        public override string ActionId => "A-SPT-001";
 
         public override ITileArea ActionArea => new TileArea { };
 
