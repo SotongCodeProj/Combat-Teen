@@ -26,14 +26,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             return UniTask.Delay(500);
         }
 
-        public override BaseUnitAction InitializeOwner(CombatUnitControl owner)
-        {
-            return new SimpleSupportAction()
-            {
-                Owner = owner
-            };
-        }
-
         public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
         {
             targetChooseHelper.OnSelectTargets.RemoveAllListeners();

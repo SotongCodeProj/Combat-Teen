@@ -43,7 +43,6 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
 
         private void InitViewEvent()
         {
-
             _view.AttackClickEvent.AddListener(SetAttackAction);
             _view.DefenseClickEvent.AddListener(SetDefenseAction);
             _view.SupportClickEvent.AddListener(SetSupportAction);

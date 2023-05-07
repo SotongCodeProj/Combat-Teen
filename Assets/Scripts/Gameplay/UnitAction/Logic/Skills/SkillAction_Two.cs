@@ -6,22 +6,22 @@ using Cysharp.Threading.Tasks;
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
-    // [CreateAssetMenu(menuName = "Test/Simple Unit State")]
-    public class SimpleSkillAction : BaseSkillAction
+    public class SkillAction_Two : BaseSkillAction
     {
-        public override string ActionId => "A-SKL-000";
-        public override ITileArea ActionArea => new TileArea
+        public override string ActionId => "A-SKL-002";
+        private TileArea _actionArea = new TileArea
         {
-            Up = 2,
-            Down = 2,
-            Left = 2,
-            Right = 2,
+            Up = 1,
+            Down = 1,
+            Left = 1,
+            Right = 1,
 
-            DownLeft = 2,
-            DownRight = 2,
-            UpLeft = 2,
-            UpRight = 2
+            DownLeft = 1,
+            DownRight = 1,
+            UpLeft = 1,
+            UpRight = 1
         };
+        public override ITileArea ActionArea => _actionArea;
         protected override UniTask PreState()
         {
             return UniTask.CompletedTask;
@@ -46,7 +46,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
                 TargetUnits = targets;
             });
             targetChooseHelper.GetSingleTargetOpponent(Owner);
-            
+
         }
     }
 }

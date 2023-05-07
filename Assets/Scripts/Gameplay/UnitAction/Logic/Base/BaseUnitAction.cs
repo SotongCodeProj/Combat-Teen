@@ -34,7 +34,10 @@ namespace CombTeen.Gameplay.Unit.Action
         protected abstract UniTask PostState();
 
         public abstract void SetUnitTargets(TargetChooseHelper targetChooseHelper);
-        public abstract BaseUnitAction InitializeOwner(CombatUnitControl owner);
+        public BaseUnitAction InitializeOwner(CombatUnitControl owner){
+            Owner = owner;
+            return this;
+        }
 
         public virtual ValueTask DisposeAsync()
         {

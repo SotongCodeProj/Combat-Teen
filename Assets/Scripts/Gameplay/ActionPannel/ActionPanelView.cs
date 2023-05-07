@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CombTeen.Gameplay.Screen.ActionPanel
@@ -36,6 +37,10 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         [Header("Visual Information")]
         [SerializeField] private TextMeshProUGUI _ownerName;
 
+        [Header("Other")]
+        //TODO : Need better way to Handler this Raycaster or change the logic
+        [SerializeField] private PhysicsRaycaster _objectRaycaster;
+        public PhysicsRaycaster ObjectRaycaster => _objectRaycaster;
         private void Awake()
         {
             InitButtonEvent();

@@ -42,13 +42,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             Owner.SetLocation(_selectedTile);
             return UniTask.CompletedTask;
         }
-        public override BaseUnitAction InitializeOwner(CombatUnitControl owner)
-        {
-            return new SimpleMoveAction()
-            {
-                Owner = owner
-            };
-        }
         public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
         {
             targetChooseHelper.OnSelectTiles.RemoveAllListeners();

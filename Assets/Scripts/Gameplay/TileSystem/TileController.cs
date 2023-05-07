@@ -24,7 +24,7 @@ namespace CombTeen.Gameplay.Tile
         private TileModelData _tileData;
         public TileController(IReadOnlyList<ActionTileObject> allTiles)
         {
-            _tileData = new TileModelData(allTiles, new Vector2Int(9, 5));
+            _tileData = new TileModelData(allTiles, new Vector2Int(7, 5));
 
         }
         public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea)
@@ -35,7 +35,7 @@ namespace CombTeen.Gameplay.Tile
             }
             _currentActiveTile.Clear();
 
-            var result = TileSystemHelper.CalculateTilePosition(ancorPos, showArea, new Vector2Int(9, 5));
+            var result = TileSystemHelper.CalculateTilePosition(ancorPos, showArea, new Vector2Int(7, 5));
             for (int i = 0; i < result.Count; i++)
             {
                 var selectedTile = _tileData.AllTiles[result[i]];

@@ -11,18 +11,14 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
     {
         public override string ActionId => "A-ATK-000";
 
-        public override ITileArea ActionArea => new TileArea
+        TileArea _actionArea = new TileArea
         {
             Up = 1,
             Down = 1,
             Left = 1,
             Right = 1,
-
-            DownLeft = 1,
-            DownRight = 1,
-            UpLeft = 1,
-            UpRight = 1
         };
+        public override ITileArea ActionArea => _actionArea;
 
         protected override UniTask PreState()
         {
@@ -37,14 +33,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
         {
             TargetUnits.ElementAt(0).UnitStatusData.ChangeCombatStatusAction.TakeDamage(10);
             return UniTask.Delay(500);
-        }
-
-        public override BaseUnitAction InitializeOwner(CombatUnitControl owner)
-        {
-            return new SimpleAttackAction()
-            {
-                Owner = owner
-            };
         }
 
         public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
