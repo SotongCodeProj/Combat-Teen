@@ -24,6 +24,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         private ITileController _tileControl;
         private TargetChooseHelper _targetChooseHelper;
         private UnityEvent<BaseUnitAction> _selectedAction = new UnityEvent<BaseUnitAction>();
+        private System.Action _lastChooseAction;
 
         public ActionPanelController(IActionPanelView view,
                                      CombatUnitsHandler combatUnitHandler,
@@ -48,6 +49,14 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             _view.SupportClickEvent.AddListener(SetSupportAction);
             _view.SkillClickEvent.AddListener(SetSkillAction);
             _view.MoveClickEvent.AddListener(SetMoveAction);
+            _view.RotateUnitEvent.AddListener(RotateUnit);
+
+
+            _view.AttackClickEvent.AddListener(() => _lastChooseAction = SetAttackAction);
+            _view.DefenseClickEvent.AddListener(() => _lastChooseAction = SetDefenseAction);
+            _view.SupportClickEvent.AddListener(() => _lastChooseAction = SetSupportAction);
+            _view.SkillClickEvent.AddListener((index) => { _lastChooseAction = () => SetSkillAction(index); });
+            _view.MoveClickEvent.AddListener(() => _lastChooseAction = SetMoveAction);
         }
 
         private void SetAttackAction()
@@ -55,10 +64,12 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             Debug.Log($"Choose Attack : {_currentUnit.UnitBasicInfoData.UnitName}");
             _currentUnit.UnitActionData.SetAttackAction()
             .SetUnitTargets(_targetChooseHelper);
+
         }
         private void SetDefenseAction()
         {
             Debug.Log($"Choose Defense : {_currentUnit.UnitBasicInfoData.UnitName}");
+
             _currentUnit.UnitActionData.SetDefeseAction()
             .SetUnitTargets(_targetChooseHelper);
         }
@@ -80,6 +91,12 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             _currentUnit.UnitActionData.SetMoveAction()
             .SetUnitTargets(_targetChooseHelper);
         }
+
+        private void RotateUnit()
+        {
+            _currentUnit.SetFacing(!_currentUnit.IsFacingLeft);
+            _lastChooseAction?.Invoke();
+        }
         public async UniTask<BaseUnitAction> GetUnitActionAsync(CombatUnitControl unit)
         {
             var cts = new CancellationTokenSource();
@@ -93,8 +110,8 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             _tileControl.ClearShowTile();
             _view.SetControlEnable(false);
             cts.Dispose();
+            _lastChooseAction = null;
             return _currentUnit.UnitActionData.UsedAction;
-
         }
         public void EnableControl(bool enable)
         {

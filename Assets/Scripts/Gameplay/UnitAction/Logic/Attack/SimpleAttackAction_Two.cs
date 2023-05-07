@@ -16,7 +16,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             Left = 2,
             UpLeft = 1,
             DownLeft = 1
-            
+
         };
         public override ITileArea ActionArea => _actionArea;
 

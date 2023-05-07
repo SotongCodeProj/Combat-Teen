@@ -11,9 +11,9 @@ namespace CombTeen.Gameplay.Tile
     {
         ActionTileObject Test_GetRandomTile();
         IEnumerable<ActionTileObject> Test_GetAllTile();
-        void ShowTileArea(Vector2Int ancorPos, ITileArea showArea);
-        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<CombatUnitControl> unitsOnTile);
-        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<ActionTileObject> clickAbleTile);
+        void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, bool reverse = false);
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, bool reverse, out IEnumerable<CombatUnitControl> unitsOnTile);
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, bool reverse, out IEnumerable<ActionTileObject> clickAbleTile);
         ActionTileObject SetOccupiedTile(ActionTileObject targetTile, ActionTileObject currentTile, CombatUnitControl combatUnitControl);
         void ClearShowTile();
     }
@@ -27,7 +27,7 @@ namespace CombTeen.Gameplay.Tile
             _tileData = new TileModelData(allTiles, new Vector2Int(7, 5));
 
         }
-        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea)
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, bool reverse = false)
         {
             for (int i = 0; i < _currentActiveTile.Count; i++)
             {
@@ -35,7 +35,7 @@ namespace CombTeen.Gameplay.Tile
             }
             _currentActiveTile.Clear();
 
-            var result = TileSystemHelper.CalculateTilePosition(ancorPos, showArea, new Vector2Int(7, 5));
+            var result = TileSystemHelper.CalculateTilePosition(ancorPos, showArea, new Vector2Int(7, 5), reverse);
             for (int i = 0; i < result.Count; i++)
             {
                 var selectedTile = _tileData.AllTiles[result[i]];
@@ -45,11 +45,11 @@ namespace CombTeen.Gameplay.Tile
             }
 
         }
-        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<CombatUnitControl> unitsOnTile)
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, bool reverse, out IEnumerable<CombatUnitControl> unitsOnTile)
         {
             unitsOnTile = new List<CombatUnitControl>();
             List<CombatUnitControl> units = new List<CombatUnitControl>();
-            ShowTileArea(ancorPos, showArea);
+            ShowTileArea(ancorPos, showArea, reverse);
 
             for (int i = 0; i < _currentActiveTile.Count; i++)
             {
@@ -59,11 +59,11 @@ namespace CombTeen.Gameplay.Tile
             }
             unitsOnTile = units;
         }
-        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, out IEnumerable<ActionTileObject> clickAbleTile)
+        public void ShowTileArea(Vector2Int ancorPos, ITileArea showArea, bool reverse, out IEnumerable<ActionTileObject> clickAbleTile)
         {
             clickAbleTile = new List<ActionTileObject>();
             List<ActionTileObject> tileObjects = new List<ActionTileObject>();
-            ShowTileArea(ancorPos, showArea);
+            ShowTileArea(ancorPos, showArea, reverse);
 
             for (int i = 0; i < _currentActiveTile.Count; i++)
             {

@@ -25,6 +25,8 @@ namespace CombTeen.Gameplay.Unit.MVC
         public IUnitStatusData UnitStatusData => Data;
         public IUnitActionData UnitActionData => Data;
 
+        public bool IsFacingLeft { get; private set; } = true;
+
         [Inject]
         public void Inject(ITileController tileController, BasicCombatRunner combatRunner)
         {
@@ -47,7 +49,7 @@ namespace CombTeen.Gameplay.Unit.MVC
                                   (BaseSupportAction)Character.SupportAction.Logic.InitializeOwner(this),
                                    skills.ToArray(),
                                   (BaseMoveAction)Character.MoveAction.Logic.InitializeOwner(this),
-                                  
+
                                   CombatRunner.OnChangeNextTurn);
 
             Data.InitializeStat(Character.BasicStatus);
@@ -66,6 +68,12 @@ namespace CombTeen.Gameplay.Unit.MVC
             targetTile.TileWorldPosition.x
             , View.transform.localPosition.y,
             targetTile.TileWorldPosition.z);
+        }
+
+        public void SetFacing(bool facingLeft)
+        {
+            IsFacingLeft = facingLeft;
+            View.SetFacing(facingLeft);
         }
 
         private void CheckUnitDie(int currentHelth)

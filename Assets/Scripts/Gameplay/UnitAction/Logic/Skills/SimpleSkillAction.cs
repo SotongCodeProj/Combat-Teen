@@ -46,7 +46,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
                 TargetUnits = targets;
             });
             targetChooseHelper.GetSingleTargetOpponent(Owner);
-            
+
         }
     }
 }

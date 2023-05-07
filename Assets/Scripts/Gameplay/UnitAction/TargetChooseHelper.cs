@@ -30,7 +30,8 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
 
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
-              requester.UnitActionData.UsedAction.ActionArea);
+              requester.UnitActionData.UsedAction.ActionArea,
+              !requester.IsFacingLeft);
 
             requester.UnitTileData.CurrentTile.OnClickEvent.AddListener((selectedTile) =>
             {
@@ -46,6 +47,7 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
               requester.UnitActionData.UsedAction.ActionArea,
+              !requester.IsFacingLeft,
               out IEnumerable<ActionTileObject> clickAbleTile);
 
             List<UniTask> process = new List<UniTask>();
@@ -69,6 +71,7 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
               requester.UnitActionData.UsedAction.ActionArea,
+              !requester.IsFacingLeft,
               out IEnumerable<ActionTileObject> clickAbleTile);
 
             List<UniTask> process = new List<UniTask>();
@@ -92,6 +95,7 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             _tileControl.ShowTileArea(
             requester.UnitTileData.Coordinate,
             requester.UnitActionData.UsedAction.ActionArea,
+            !requester.IsFacingLeft,
             out IEnumerable<ActionTileObject> clickAbleTile);
 
             foreach (var item in clickAbleTile)
