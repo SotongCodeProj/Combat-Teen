@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CombTeen.Gameplay.DataTransport;
 using CombTeen.Gameplay.DataTransport.TestData;
 using CombTeen.Gameplay.StateRunner;
 using CombTeen.Gameplay.Tile;
@@ -34,7 +35,7 @@ namespace CombTeen.Gameplay.Unit.MVC
             CombatRunner = combatRunner;
         }
 
-        public virtual void InitialUnitData(CharacterData Character)
+        public virtual void InitialUnitData(UnitPlayData.CharacterData Character)
         {
             Data.InitializeBasicInfo(Character.CharacterId, Character.CharacterName);
 

@@ -1,3 +1,4 @@
+using CombTeen.Gameplay.DataTransport;
 using CombTeen.Gameplay.DataTransport.TestData;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Unit.MVC;
@@ -11,7 +12,7 @@ namespace CombTeen.Gameplay.Unit
     {
         public override string UnitId => "Player";
 
-        public override void InitialUnitData(CharacterData Character)
+        public override void InitialUnitData(UnitPlayData.CharacterData Character)
         {
             base.InitialUnitData(Character);
             UnitStatusData.ChangeCombatStatusAction.AfterTakeDamageEvent.AddListener(
