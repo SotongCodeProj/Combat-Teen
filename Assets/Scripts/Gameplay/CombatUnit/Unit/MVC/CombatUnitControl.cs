@@ -1,21 +1,22 @@
 using System.Collections.Generic;
 using CombTeen.Gameplay.DataTransport;
-using CombTeen.Gameplay.DataTransport.TestData;
 using CombTeen.Gameplay.StateRunner;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Tile.Object;
 using CombTeen.Gameplay.Unit.Action.Logic;
 using CombTeen.Gameplay.Unit.MVC.Data;
+using UnityEngine;
 using VContainer;
 
 namespace CombTeen.Gameplay.Unit.MVC
 {
-    public abstract class CombatUnitControl
+    public abstract class CombatUnitControl : MonoBehaviour
     {
         public abstract string UnitId { get; }
-        protected CombatUnitModel Data = new CombatUnitModel();
-        protected CombatUnitView View;
-        protected CombatUnitIndicatorView StatusIndicator;
+        protected CombatUnitModel Data;
+        [SerializeField] protected CombatUnitView View;
+        [SerializeField] protected CombatUnitIndicatorView StatusIndicator;
+        [SerializeField] public CombatCanvasView CanvasView;
 
         protected ITileController TileControl;
         protected BasicCombatRunner CombatRunner;
@@ -37,7 +38,10 @@ namespace CombTeen.Gameplay.Unit.MVC
 
         public virtual void InitialUnitData(UnitPlayData.CharacterData Character)
         {
+            Data = new CombatUnitModel();
             Data.InitializeBasicInfo(Character.CharacterId, Character.CharacterName);
+            CanvasView.SetName(Character.CharacterName);
+            StatusIndicator.SetUnitName(Character.CharacterName);
 
             List<BaseSkillAction> skills = new List<BaseSkillAction>();
             for (int i = 0; i < Character.SkillsAction.Length; i++)

@@ -42,7 +42,7 @@ namespace CombTeen.Gameplay.StateRunner
             while (_keepRun)
             {
                 await LoopProcess();
-                await UniTask.WaitUntil(() => DoneLoopState);
+                // await UniTask.WaitUntil(() => DoneLoopState);
                 Next();
             }
 
@@ -55,10 +55,12 @@ namespace CombTeen.Gameplay.StateRunner
         }
         public void Next()
         {
+
             if (!_currentState.Equals(TBS_State.Loop) || !DoneLoopState) { Debug.LogWarning("Error whenNext"); return; }
             if (LoopIndex + 1 >= Data.LoopStates.Count())
             {
                 OnChangeNextTurn?.Invoke(_currentTurnAmount);
+                LoopIndex = 0;
             }
             else
             {

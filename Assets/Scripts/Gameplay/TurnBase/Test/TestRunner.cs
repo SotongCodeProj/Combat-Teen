@@ -41,10 +41,10 @@ public class TestRunner : MonoBehaviour
         _playerUnits = playerUnits;
         _enemyUnits = enemyUnits;
     }
-    private void Initial()
+    private async UniTask Initial()
     {
         var unit = BridgeData.Instance.GetCurrentUnitData();
-
+        await UniTask.WaitUntil(()=> _playerUnits.Count >0 && _enemyUnits.Count>0);
         for (int i = 0; i < _playerUnits.Count; i++)
         {
             _playerUnits[i].InitialUnitData(unit.Players.ElementAt(i));
@@ -61,9 +61,9 @@ public class TestRunner : MonoBehaviour
 
 
     [Button]
-    private void Run()
+    private async void Run()
     {
-        Initial();
+        await Initial();
         _runner.RunAsync().Forget();
     }
 

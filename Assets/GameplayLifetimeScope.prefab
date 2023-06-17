@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4366664133784577443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4366664133784577453}
+  - component: {fileID: 4366664133784577455}
+  m_Layer: 0
+  m_Name: GameplayLifetimeScope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4366664133784577453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366664133784577443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4366664133784577455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366664133784577443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a437e3f985b94d128ae760bd4b5766b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  _pureScripts:
+  - {fileID: 11500000, guid: 1fc8d775035a4483ebbb4b927ad6ee0c, type: 3}
+  - {fileID: 11500000, guid: 170ef402bb53f4ee191063302d6b25b8, type: 3}
+  _monobehavScripts: []
+  _turnBaseComponents:
+    RunnerScript: {fileID: 11500000, guid: 0296c8f12318d4d42b37a1b1e75a3451, type: 3}
+    States:
+    - Bridge: {fileID: 11500000, guid: 7ec7008f69b9942948ef0073e36e3adf, type: 3}
+      AdditionalComponents: []
+    - Bridge: {fileID: 11500000, guid: 2ff195dc59cc347b78092725448556e1, type: 3}
+      AdditionalComponents: []
+    - Bridge: {fileID: 11500000, guid: 6e8339f984a9143f393640675b608ca0, type: 3}
+      AdditionalComponents: []
+    - Bridge: {fileID: 11500000, guid: 2b74a2a3f17f2479b95ccb1747233fa3, type: 3}
+      AdditionalComponents: []
+  _playerUnits:
+    BridgeController: {fileID: 11500000, guid: 5c95a3dec2ba9413298b1c6d68a89f9e, type: 3}
+    UnitObjects:
+    - UnitController: {fileID: 11500000, guid: 5c95a3dec2ba9413298b1c6d68a89f9e, type: 3}
+      View: {fileID: 0}
+      IndicatorView: {fileID: 0}
+    - UnitController: {fileID: 11500000, guid: 5c95a3dec2ba9413298b1c6d68a89f9e, type: 3}
+      View: {fileID: 0}
+      IndicatorView: {fileID: 0}
+    - UnitController: {fileID: 11500000, guid: 5c95a3dec2ba9413298b1c6d68a89f9e, type: 3}
+      View: {fileID: 0}
+      IndicatorView: {fileID: 0}
+  _enemyUnits:
+    BridgeController: {fileID: 11500000, guid: f8a0ca4a458174f9399472ea4320b9bc, type: 3}
+    UnitObjects:
+    - UnitController: {fileID: 11500000, guid: f8a0ca4a458174f9399472ea4320b9bc, type: 3}
+      View: {fileID: 0}
+      IndicatorView: {fileID: 0}
+    - UnitController: {fileID: 11500000, guid: f8a0ca4a458174f9399472ea4320b9bc, type: 3}
+      View: {fileID: 0}
+      IndicatorView: {fileID: 0}
+    - UnitController: {fileID: 11500000, guid: f8a0ca4a458174f9399472ea4320b9bc, type: 3}
+      View: {fileID: 0}
+      IndicatorView: {fileID: 0}
+  _tileComponent:
+    TileController: {fileID: 11500000, guid: 99b6a3b52758d432b8fe74fa972a977d, type: 3}
+    TileObjectBridge: {fileID: 11500000, guid: 4e41cf00c11574e029dc1195f9c9ac28, type: 3}
+    TileViews:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  _hudComponent:
+    ActionPanelControl: {fileID: 11500000, guid: 6927a278eebbf48a5bbbfc9a8d550c40, type: 3}
+    ActionPanelView: {fileID: 0}

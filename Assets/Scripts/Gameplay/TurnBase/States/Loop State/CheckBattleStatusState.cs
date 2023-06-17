@@ -22,11 +22,14 @@ namespace CombTeen.Gameplay.State
         }
         protected override UniTask PostState()
         {
+
+            Debug.Log("---=End Check Battle State=---");
             return UniTask.CompletedTask;
         }
 
         protected override UniTask PreState()
         {
+            Debug.Log("---=Begin Check Battle State=---");
             return UniTask.CompletedTask;
         }
 

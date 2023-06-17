@@ -18,20 +18,12 @@ namespace CombTeen.Gameplay.Tile.Object
 
     public class ActionTileObject : TileObject, IActionTileData, IClickableTile
     {
-        private TileView _view;
-        public string name => _view.name;
+        [SerializeField] private TileView _view;
         public List<string> TileActionTags { private set; get; }
         public override Vector3 TileWorldPosition => _view.transform.localPosition;
         public CombatUnitControl OccupiedUnit { private set; get; }
 
         public UnityEvent<ActionTileObject> OnClickEvent {private set;get;} = new UnityEvent<ActionTileObject>();
-
-         public ActionTileObject(TileView view)
-        {
-            _view = view;
-        }
-
-
 
         public virtual void Initial(Vector2Int tileCoordinate, params string[] actionTags)
         {

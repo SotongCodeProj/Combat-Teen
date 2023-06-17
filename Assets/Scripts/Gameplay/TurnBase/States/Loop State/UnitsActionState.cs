@@ -26,6 +26,7 @@ namespace CombTeen.Gameplay.State
 
         protected override UniTask PreState()
         {
+            Debug.Log("---=Begin Unit Action State=---");
             var temp = new List<CombatUnitControl>();
             foreach (var unit in _unitsHandler.GetAllUnits())
             {
@@ -39,6 +40,7 @@ namespace CombTeen.Gameplay.State
         }
         protected override UniTask PostState()
         {
+            Debug.Log("---=End Unit Action State=---");
             return UniTask.CompletedTask;
         }
         protected override async UniTask ProcessState()
@@ -46,10 +48,11 @@ namespace CombTeen.Gameplay.State
             foreach (var unit in _unitsOrder)
             {
                 if (unit.UnitStatusData.CombatStat.Health <= 0) continue;
-                //Disable Raycast + Enable HUD
                 Debug.Log($"Unit Do Action : {unit.UnitBasicInfoData.UnitName}");
+                unit.CanvasView.gameObject.SetActive(true);
                 await using (var action = await _actionPanel.GetUnitActionAsync(unit))
                 {
+                    unit.CanvasView.gameObject.SetActive(false);
                     await action.PreProcess;
                     await action.MainProcess;
                     await action.PostProcess;
