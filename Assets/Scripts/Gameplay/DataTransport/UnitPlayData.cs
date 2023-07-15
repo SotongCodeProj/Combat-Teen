@@ -1,5 +1,5 @@
+using CombTeen.Esential.ActionSystem;
 using CombTeen.Gameplay.Unit.Action.Logic;
-using CombTeen.Gameplay.Unit.Action.Object;
 using CombTeen.Gameplay.Unit.Status;
 using UnityEngine;
 
@@ -16,11 +16,11 @@ namespace CombTeen.Gameplay.DataTransport
             public CharacterStat BasicStatus;
 
             [Header("Action")]
-            public ActionObject<BaseAttackAction> AttackAction;
-            public ActionObject<BaseDefenseAction> DefenseAction;
-            public ActionObject<BaseSkillAction>[] SkillsAction;
-            public ActionObject<BaseSupportAction> SupportAction;
-            public ActionObject<BaseMoveAction> MoveAction;
+            public ActionDataAttack AttackAction;
+            public ActionDataDefense DefenseAction;
+            public ActionDataSkill[] SkillsAction;
+            public ActionDataSupport SupportAction;
+            public ActionDataMove MoveAction;
         }
 
         [System.Serializable]

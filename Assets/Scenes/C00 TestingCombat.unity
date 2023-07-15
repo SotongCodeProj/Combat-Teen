@@ -152,92 +152,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ecb01a661c6d44b28a4bf993e6afbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayersData:
-  - CharacterId: U-PLAYER-01
+  Players:
+  - CharacterId: U-PLAYER-001
     CharacterName: PLAYER 1
     BasicStatus:
       _attack: 10
       _defense: 5
-      _health: 30
-      _speed: 6
-      _ap: 5
-    AttackAction: {fileID: 8403287687423553479, guid: 57c3c49def7a84542a6ab97bda1ad932, type: 3}
-    DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
-    SkillsAction:
-    - {fileID: -6146999445824223425, guid: 1ce31ad4a339347f0b15ed325b79fd1f, type: 3}
-    SupportAction: {fileID: -9137983319243096502, guid: 4a2be3c7f72784c5f9a881ddf486f6ac, type: 3}
-    MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
-  - CharacterId: U-PLAYER-02
-    CharacterName: PLAYER 2
-    BasicStatus:
-      _attack: 13
-      _defense: 6
-      _health: 35
+      _health: 10
       _speed: 3
       _ap: 5
-    AttackAction: {fileID: 2600474260243103554, guid: e29a238d922124ceabc8f25fa7a615f0, type: 3}
-    DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
+    AttackAction: {fileID: 11400000, guid: 70bb79190eab54aa7befff35f6d57f71, type: 2}
+    DefenseAction: {fileID: 11400000, guid: 6e937aa68ef8346f5bc2f6d787a3ba31, type: 2}
     SkillsAction:
-    - {fileID: 2929148977574579564, guid: fbc97a72a476140d1b3752e3b68fe16b, type: 3}
-    SupportAction: {fileID: -9137983319243096502, guid: 4a2be3c7f72784c5f9a881ddf486f6ac, type: 3}
-    MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
-  - CharacterId: U-PLAYER-03
-    CharacterName: PLAYER 3
-    BasicStatus:
-      _attack: 11
-      _defense: 8
-      _health: 40
-      _speed: 2
-      _ap: 5
-    AttackAction: {fileID: 8403287687423553479, guid: 57c3c49def7a84542a6ab97bda1ad932, type: 3}
-    DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
-    SkillsAction:
-    - {fileID: 7513317853579531361, guid: 9b248b14e1d104799980a567864b7b9e, type: 3}
-    SupportAction: {fileID: 7637067741550725073, guid: d02a816f67a154713b9c73dcada2005c, type: 3}
-    MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
-  EnemysData:
-  - CharacterId: U-ENEMY-01
-    CharacterName: ENEMY 1
+    - {fileID: 11400000, guid: 95b675693e6ca47acb72cece2343aa3f, type: 2}
+    SupportAction: {fileID: 11400000, guid: a2f32fa6f36624046a652ed8ca196f4f, type: 2}
+    MoveAction: {fileID: 11400000, guid: 588fe6ec6ec01456fa02318f8463d032, type: 2}
+  Enemys:
+  - CharacterId: U-ENEMY-001
+    CharacterName: PLAYER 1
     BasicStatus:
       _attack: 6
-      _defense: 0
+      _defense: 3
       _health: 20
-      _speed: 5
+      _speed: 2
       _ap: 5
-    AttackAction: {fileID: 3799667466183076452, guid: 88f7956c7c27e4d639ce6edd8a95cce2, type: 3}
-    DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
+    AttackAction: {fileID: 11400000, guid: 92c5e12828de94a008d2c694b7a50cfd, type: 2}
+    DefenseAction: {fileID: 11400000, guid: 6e937aa68ef8346f5bc2f6d787a3ba31, type: 2}
     SkillsAction:
-    - {fileID: -6146999445824223425, guid: 1ce31ad4a339347f0b15ed325b79fd1f, type: 3}
-    SupportAction: {fileID: 7637067741550725073, guid: d02a816f67a154713b9c73dcada2005c, type: 3}
-    MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
-  - CharacterId: U-ENEMY-02
-    CharacterName: ENEMY 2
-    BasicStatus:
-      _attack: 7
-      _defense: 0
-      _health: 30
-      _speed: 4
-      _ap: 6
-    AttackAction: {fileID: 8403287687423553479, guid: 57c3c49def7a84542a6ab97bda1ad932, type: 3}
-    DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
-    SkillsAction:
-    - {fileID: 7513317853579531361, guid: 9b248b14e1d104799980a567864b7b9e, type: 3}
-    SupportAction: {fileID: 7637067741550725073, guid: d02a816f67a154713b9c73dcada2005c, type: 3}
-    MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
-  - CharacterId: U-ENEMY-03
-    CharacterName: ENEMY 3
-    BasicStatus:
-      _attack: 10
-      _defense: 0
-      _health: 15
-      _speed: 1
-      _ap: 6
-    AttackAction: {fileID: 2600474260243103554, guid: e29a238d922124ceabc8f25fa7a615f0, type: 3}
-    DefenseAction: {fileID: 2139319182080372173, guid: 0fad3daf2f53d49869b04f65ab619a83, type: 3}
-    SkillsAction:
-    - {fileID: 2929148977574579564, guid: fbc97a72a476140d1b3752e3b68fe16b, type: 3}
-    SupportAction: {fileID: -9137983319243096502, guid: 4a2be3c7f72784c5f9a881ddf486f6ac, type: 3}
-    MoveAction: {fileID: -8509148338258971502, guid: 7148c30cd66754191a0213bcaa73096a, type: 3}
+    - {fileID: 11400000, guid: 565a7189158804b8a9ee9840172da4cd, type: 2}
+    SupportAction: {fileID: 11400000, guid: a2f32fa6f36624046a652ed8ca196f4f, type: 2}
+    MoveAction: {fileID: 11400000, guid: 588fe6ec6ec01456fa02318f8463d032, type: 2}
 --- !u!4 &1338730
 Transform:
   m_ObjectHideFlags: 0
@@ -1551,6 +1495,10 @@ PrefabInstance:
     - target: {fileID: 5526418725677382617, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526418725677382622, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
+      propertyPath: m_FlipX
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
@@ -4057,6 +4005,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: C5-E
       objectReference: {fileID: 0}
+    - target: {fileID: 5526418725677382616, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5526418725677382617, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4108,17 +4060,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5526418725677382617, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
   m_PrefabInstance: {fileID: 1028369205}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1028369207 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 90554792598875992, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
-  m_PrefabInstance: {fileID: 1028369205}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a0ca4a458174f9399472ea4320b9bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1034901618
 GameObject:
   m_ObjectHideFlags: 0
@@ -4466,6 +4407,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: C2-P
       objectReference: {fileID: 0}
+    - target: {fileID: 6335743658639798899, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6335743658639798902, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
       propertyPath: StatusIndicator
       value: 
@@ -4485,17 +4430,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6335743658639798898, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
   m_PrefabInstance: {fileID: 1158843316}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1158843318 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6335743658639798902, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
-  m_PrefabInstance: {fileID: 1158843316}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c95a3dec2ba9413298b1c6d68a89f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1163280914
 GameObject:
   m_ObjectHideFlags: 0
@@ -5908,6 +5842,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: C6-E
       objectReference: {fileID: 0}
+    - target: {fileID: 5526418725677382616, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5526418725677382617, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5959,17 +5897,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5526418725677382617, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
   m_PrefabInstance: {fileID: 1408331890}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1408331892 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 90554792598875992, guid: 6e44cc9eab4304a68a97bb7904864161, type: 3}
-  m_PrefabInstance: {fileID: 1408331890}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a0ca4a458174f9399472ea4320b9bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1423305853 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6181905037802706594, guid: 752efd776e6904f59b15ec172dedf77e, type: 3}
@@ -7725,6 +7652,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: C3-P
       objectReference: {fileID: 0}
+    - target: {fileID: 6335743658639798899, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6335743658639798902, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
       propertyPath: StatusIndicator
       value: 
@@ -7744,17 +7675,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6335743658639798898, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
   m_PrefabInstance: {fileID: 1911164721}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1911164723 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6335743658639798902, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
-  m_PrefabInstance: {fileID: 1911164721}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c95a3dec2ba9413298b1c6d68a89f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1936204126
 GameObject:
   m_ObjectHideFlags: 0
@@ -8216,12 +8136,8 @@ MonoBehaviour:
   - {fileID: 792159347}
   _playerUnits:
   - {fileID: 335614295}
-  - {fileID: 1158843318}
-  - {fileID: 1911164723}
   _enemyUnits:
   - {fileID: 296929265}
-  - {fileID: 1028369207}
-  - {fileID: 1408331892}
   _actionTile:
   - {fileID: 3995329017147521509}
   - {fileID: 2017902964}
@@ -9889,6 +9805,10 @@ PrefabInstance:
     - target: {fileID: 6335743658639798899, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
       propertyPath: m_Name
       value: C1-P
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335743658639798901, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
+      propertyPath: m_FlipX
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6335743658639798902, guid: 4b9579ad52bff4f349151604770c7e14, type: 3}
       propertyPath: StatusIndicator

@@ -6,10 +6,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 {
     public class SupHealAction : BaseSupportAction
     {
-        public override string ActionId => "A-SPT-001";
-
-        public override ITileArea ActionArea => new TileArea { };
-
         protected override UniTask PreState()
         {
             return UniTask.CompletedTask;
@@ -33,7 +29,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             {
                 TargetUnits = targets;
             });
-            targetChooseHelper.GetSelfTarget(Owner);
+            targetChooseHelper.GetSelfTarget(Owner, TileArea.BasicArea);
 
         }
     }

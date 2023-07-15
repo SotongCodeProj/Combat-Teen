@@ -1,4 +1,6 @@
 
+using CombTeen.Constant;
+
 namespace CombTeen.Esential.PlayerData.CharacterData
 {
     public class PlayerCharacterData : IPlayerCharacterData
@@ -8,5 +10,23 @@ namespace CombTeen.Esential.PlayerData.CharacterData
         public int Health { private set; get; }
         public int Speed { private set; get; }
         public int Ap { private set; get; }
+
+        public ClassConstant.ClassType ClassType { private set; get; }
+
+
+        public PlayerCharacterData(int attack =0,
+                                   int defense=0,
+                                   int health=0,
+                                   int speed=0,
+                                   int ap=0,
+                                   ClassConstant.ClassType classType = ClassConstant.ClassType.Striker)
+        {
+            Attack = attack;
+            Defense = defense;
+            Health = health;
+            Speed = speed;
+            Ap = ap;
+            ClassType = classType;
+        }
     }
 }

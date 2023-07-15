@@ -43,7 +43,7 @@ public class TestRunner : MonoBehaviour
     }
     private async UniTask Initial()
     {
-        var unit = BridgeData.Instance.GetCurrentUnitData();
+        var unit = _testData;//BridgeData.Instance.GetCurrentUnitData();
         await UniTask.WaitUntil(()=> _playerUnits.Count >0 && _enemyUnits.Count>0);
         for (int i = 0; i < _playerUnits.Count; i++)
         {

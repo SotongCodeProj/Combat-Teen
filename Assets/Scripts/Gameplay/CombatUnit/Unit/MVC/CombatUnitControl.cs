@@ -46,14 +46,14 @@ namespace CombTeen.Gameplay.Unit.MVC
             List<BaseSkillAction> skills = new List<BaseSkillAction>();
             for (int i = 0; i < Character.SkillsAction.Length; i++)
             {
-                skills.Add((BaseSkillAction)Character.SkillsAction[i].Logic.InitializeOwner(this));
+                skills.Add((BaseSkillAction)Character.SkillsAction[i].GenerateLogic(this));
             }
 
-            Data.InitializeAction((BaseAttackAction)Character.AttackAction.Logic.InitializeOwner(this),
-                                  (BaseDefenseAction)Character.DefenseAction.Logic.InitializeOwner(this),
-                                  (BaseSupportAction)Character.SupportAction.Logic.InitializeOwner(this),
-                                   skills.ToArray(),
-                                  (BaseMoveAction)Character.MoveAction.Logic.InitializeOwner(this),
+            Data.InitializeAction(attack: Character.AttackAction.GenerateLogic(this),
+                                  defense: Character.DefenseAction.GenerateLogic(this),
+                                  support: Character.SupportAction.GenerateLogic(this),
+                                  skills: skills,
+                                  move: Character.MoveAction.GenerateLogic(this),
 
                                   CombatRunner.OnChangeNextTurn);
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CombTeen.Gameplay.Tile;
 using CombTeen.Gameplay.Tile.Object;
 using UnityEngine.Events;
+using UnityEngine;
 
 namespace CombTeen.Gameplay.Unit.Action.Helper
 {
@@ -25,12 +26,12 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             OnClickEvent.AddListener(ClearClickTileEvent);
         }
 
-        public void GetSelfTarget(CombatUnitControl requester)
+        public void GetSelfTarget(CombatUnitControl requester, IEnumerable<Vector2Int> searchArea)
         {
 
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
-              requester.UnitActionData.UsedAction.ActionArea,
+              searchArea,
               !requester.IsFacingLeft);
 
             requester.UnitTileData.CurrentTile.OnClickEvent.AddListener((selectedTile) =>
@@ -46,7 +47,7 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
         {
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
-              requester.UnitActionData.UsedAction.ActionArea,
+              requester.UnitActionData.UsedAction.TileArea.BasicArea,
               !requester.IsFacingLeft,
               out IEnumerable<ActionTileObject> clickAbleTile);
 
@@ -66,11 +67,11 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             }
             _currentTile.AddRange(clickAbleTile);
         }
-        public void GetSingleTargetOpponent(CombatUnitControl requester)
+        public void GetSingleTargetOpponent(CombatUnitControl requester, IEnumerable<Vector2Int> searchArea)
         {
             _tileControl.ShowTileArea(
               requester.UnitTileData.Coordinate,
-              requester.UnitActionData.UsedAction.ActionArea,
+              searchArea,
               !requester.IsFacingLeft,
               out IEnumerable<ActionTileObject> clickAbleTile);
 
@@ -90,11 +91,11 @@ namespace CombTeen.Gameplay.Unit.Action.Helper
             _currentTile.AddRange(clickAbleTile);
         }
 
-        public void GetTileWithoutUnit(CombatUnitControl requester)
+        public void GetTileWithoutUnit(CombatUnitControl requester, IEnumerable<Vector2Int> searchArea)
         {
             _tileControl.ShowTileArea(
             requester.UnitTileData.Coordinate,
-            requester.UnitActionData.UsedAction.ActionArea,
+            searchArea,
             !requester.IsFacingLeft,
             out IEnumerable<ActionTileObject> clickAbleTile);
 

@@ -1,47 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 namespace CombTeen.Gameplay.Tile.Helper
 {
     public class TileSystemHelper
     {
-        public static List<Vector2Int> CalculateTilePosition(Vector2Int ancorPos, ITileArea area, Vector2Int limitArea, bool reverse = false)
+        public static IEnumerable<Vector2Int> CalculateTilePosition(Vector2Int ancorPos, IEnumerable<Vector2Int> area, Vector2Int limitArea, bool reverse = false)
         {
-            List<Vector2Int> result = new List<Vector2Int>();
-
-            for (int x = -area.Left; x < area.Right + 1; x++)
+            var result = new List<Vector2Int>();
+            foreach (var coor in area)
             {
-                result.Add(new Vector2Int(
-                    Mathf.Clamp(!reverse ? ancorPos.x + x : (ancorPos.x - x), 0, limitArea.x - 1),
-                    Mathf.Clamp(ancorPos.y, 0, limitArea.y - 1))
-                );
+                var xCoor = Mathf.Clamp(ancorPos.x + (reverse ? -coor.x : coor.x), 0, limitArea.x - 1);
+                var yCoor = Mathf.Clamp(ancorPos.y + coor.x, 0, limitArea.y - 1);
+
+                Debug.Log($"Ancor :{ancorPos} |Input X{coor.x} Y{coor.y} | Final X{xCoor} Y{yCoor}");
+                result.Add(new Vector2Int(Mathf.Clamp(ancorPos.x + (reverse ? -coor.x : coor.x), 0, limitArea.x - 1),
+                                          Mathf.Clamp(ancorPos.y + coor.y, 0, limitArea.y - 1)));
             }
 
-            for (int y = -area.Down; y < area.Up + 1; y++)
-            {
-                result.Add(new Vector2Int(
-                    Mathf.Clamp(ancorPos.x, 0, limitArea.x - 1),
-                    Mathf.Clamp(ancorPos.y + y, 0, limitArea.y - 1))
-                );
-            }
-
-            for (int i = -area.DownLeft; i < area.UpRight + 1; i++)
-            {
-                result.Add(new Vector2Int(
-                    Mathf.Clamp(!reverse ? ancorPos.x + i : (ancorPos.x - i), 0, limitArea.x - 1),
-                    Mathf.Clamp(ancorPos.y + i, 0, limitArea.y - 1))
-                );
-            }
-            for (int i = -area.DownRight; i < area.UpLeft + 1; i++)
-            {
-                result.Add(new Vector2Int(
-                    Mathf.Clamp(!reverse ? ancorPos.x - i : (ancorPos.x + i), 0, limitArea.x - 1),
-                    Mathf.Clamp(ancorPos.y + i, 0, limitArea.y - 1))
-                );
-            }
-
-
-            return result.Distinct().ToList();
+            return result;
         }
     }
 }

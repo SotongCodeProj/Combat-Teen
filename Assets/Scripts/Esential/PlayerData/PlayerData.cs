@@ -15,6 +15,5 @@ namespace CombTeen.Esential.PlayerData
             ChararcterData = chararcterData;
             GeneralInfo = generalInfo;
         }
-
     }
 }

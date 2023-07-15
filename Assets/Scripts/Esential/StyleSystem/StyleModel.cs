@@ -1,4 +1,4 @@
-using CombTeen.Constant.Class;
+using CombTeen.Constant;
 using System.Collections.Generic;
 
 namespace CombTeen.Esential.StyleSystem

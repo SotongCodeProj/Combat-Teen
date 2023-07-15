@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CombTeen.Constant.Class;
+using CombTeen.Constant;
 using UnityEngine;
 
 namespace CombTeen.Esential.StyleSystem

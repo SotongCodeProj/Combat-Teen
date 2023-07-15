@@ -57,18 +57,18 @@ namespace CombTeen.Gameplay.Unit.MVC
         public BaseUnitAction UsedAction { private set; get; }
 
         public void InitializeAction(BaseAttackAction attack,
-                               BaseDefenseAction defense,
-                               BaseSupportAction supportAction,
-                               BaseSkillAction[] skillActions,
-                               BaseMoveAction moveAction,
+                                     BaseDefenseAction defense,
+                                     BaseSupportAction support,
+                                     IEnumerable<BaseSkillAction> skills,
+                                     BaseMoveAction move,
 
                                UnityEvent<int> ChangeTurnEvent)
         {
             AttackAction = attack;
             DefenseAction = defense;
-            SupportAction = supportAction;
-            MoveAction = moveAction;
-            SkillActions = new List<BaseSkillAction>(skillActions);
+            SupportAction = support;
+            MoveAction = move;
+            SkillActions = new List<BaseSkillAction>(skills);
 
             AttackAction.InitializeChangeTurnEvent(ChangeTurnEvent);
             DefenseAction.InitializeChangeTurnEvent(ChangeTurnEvent);

@@ -1,7 +1,7 @@
-
+using CombTeen.Constant;
 namespace CombTeen.Esential.PlayerData.CharacterData
 {
-    public interface IPlayerCharacterData : ICharacterBasicStat
+    public interface IPlayerCharacterData : ICharacterBasicStat, ICharacterDevelopData
     {
 
     }
@@ -13,5 +13,10 @@ namespace CombTeen.Esential.PlayerData.CharacterData
         public int Health { get; }
         public int Speed { get; }
         public int Ap { get; }
+    }
+
+    public interface ICharacterDevelopData
+    {
+        public ClassConstant.ClassType ClassType { get; }
     }
 }

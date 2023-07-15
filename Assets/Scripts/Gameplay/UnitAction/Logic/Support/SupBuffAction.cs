@@ -7,7 +7,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
 {
     public class SupBuffAction : BaseSupportAction
     {
-        public override string ActionId => "A-SPT-002";
 
         private AdditionalStatData _statAdding = new AdditionalStatData
         {
@@ -19,7 +18,6 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
         };
 
         private int _currentCountter = 0;
-        public override ITileArea ActionArea => new TileArea { };
 
         protected override UniTask PreState()
         {
@@ -54,7 +52,7 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             {
                 TargetUnits = targets;
             });
-            targetChooseHelper.GetSelfTarget(Owner);
+            targetChooseHelper.GetSelfTarget(Owner, TileArea.BasicArea);
 
         }
 
