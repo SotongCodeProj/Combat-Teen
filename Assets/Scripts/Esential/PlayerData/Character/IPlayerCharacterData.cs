@@ -17,6 +17,6 @@ namespace CombTeen.Esential.PlayerData.CharacterData
 
     public interface ICharacterDevelopData
     {
-        public ClassConstant.ClassType ClassType { get; }
+        public ClassType ClassType { get; }
     }
 }

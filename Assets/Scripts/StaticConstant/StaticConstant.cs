@@ -1,13 +1,20 @@
 namespace CombTeen.Constant
 {
-    public class ClassConstant
+
+    public enum ClassType
     {
-        public enum ClassType
-        {
-            Striker,
-            Guardian,
-            Marksman,
-            Supporter
-        }
+        Striker,
+        Guardian,
+        Marksman,
+        Supporter
+    }
+
+    public enum ActionType
+    {
+        Attack,
+        Defense,
+        Skill,
+        Support,
+        Move
     }
 }

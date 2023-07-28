@@ -11,7 +11,7 @@ namespace CombTeen.Esential.PlayerData.CharacterData
         public int Speed { private set; get; }
         public int Ap { private set; get; }
 
-        public ClassConstant.ClassType ClassType { private set; get; }
+        public ClassType ClassType { private set; get; }
 
 
         public PlayerCharacterData(int attack =0,
@@ -19,7 +19,7 @@ namespace CombTeen.Esential.PlayerData.CharacterData
                                    int health=0,
                                    int speed=0,
                                    int ap=0,
-                                   ClassConstant.ClassType classType = ClassConstant.ClassType.Striker)
+                                   ClassType classType = ClassType.Striker)
         {
             Attack = attack;
             Defense = defense;

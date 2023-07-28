@@ -1,7 +1,6 @@
 using System.Linq;
+using CombTeen.Constant;
 using CombTeen.Esential.ActionSystem;
-using CombTeen.Gameplay.Unit.Action;
-using CombTeen.Gameplay.Unit.Action.Logic;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
@@ -80,23 +79,18 @@ namespace CombTeen.ActionCreator
             //TODO : Need file exist check
 
             var soObject = target as ActionDataSO;
-            soObject.BasicArea =_tileManager.GetActiveTileCoordinates().ToArray();
+
             soObject.ActionId = string.Format("{0}-{1}", firstSuffix, Id);
             soObject.ActionName = Name;
+            soObject.ActionType = _actionType;
+            
+            soObject.BasicArea =_tileManager.GetActiveTileCoordinates().ToArray();
+            
             soObject._logicScript = LogicScript;
 
             AssetDatabase.CreateAsset(target, $"Assets/Content/ActionData/{_actionType}/{firstSuffix}-{Id}.asset");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-    }
-
-    public enum ActionType
-    {
-        Attack,
-        Defense,
-        Skill,
-        Support,
-        Move
     }
 }

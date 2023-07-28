@@ -1,7 +1,6 @@
 using System;
-using System.Reflection;
+using CombTeen.Constant;
 using CombTeen.Gameplay.Unit.Action;
-using CombTeen.Gameplay.Unit.Action.Logic;
 using CombTeen.Gameplay.Unit.MVC;
 using NaughtyAttributes;
 using UnityEditor;
@@ -13,8 +12,11 @@ namespace CombTeen.Esential.ActionSystem
     {
         public string ActionId;
         public string ActionName;
+        public ActionType ActionType;
 
         public Vector2Int[] BasicArea;
+
+        [ReadOnly]
         [SerializeField] protected string _logicReference;
 #if UNITY_EDITOR
         public MonoScript _logicScript;
