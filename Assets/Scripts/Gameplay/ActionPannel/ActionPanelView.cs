@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CombTeen.Gameplay.Screen.ActionPanel
@@ -12,6 +13,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         public UnityEvent SupportClickEvent { get; }
         public UnityEvent<int> SkillClickEvent { get; }
         public UnityEvent MoveClickEvent { get; }
+        public UnityEvent RotateUnitEvent { get; }
 
         void SetControlEnable(bool enable);
         public void SetVisual(string ownerName);
@@ -24,6 +26,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         public UnityEvent SupportClickEvent { private set; get; } = new UnityEvent();
         public UnityEvent<int> SkillClickEvent { private set; get; } = new UnityEvent<int>();
         public UnityEvent MoveClickEvent { get; } = new UnityEvent();
+        public UnityEvent RotateUnitEvent { get; } = new UnityEvent();
 
         [Header("HUD Component")]
         [SerializeField] private CanvasGroup _canvasGroup;
@@ -32,10 +35,15 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
         [SerializeField] private Button _supportButton;
         [SerializeField] private Button[] _skillButtons;
         [SerializeField] private Button _moveButton;
+        [SerializeField] private Button _rotateButton;
 
         [Header("Visual Information")]
         [SerializeField] private TextMeshProUGUI _ownerName;
 
+        [Header("Other")]
+        //TODO : Need better way to Handler this Raycaster or change the logic
+        [SerializeField] private PhysicsRaycaster _objectRaycaster;
+        public PhysicsRaycaster ObjectRaycaster => _objectRaycaster;
         private void Awake()
         {
             InitButtonEvent();
@@ -46,6 +54,7 @@ namespace CombTeen.Gameplay.Screen.ActionPanel
             _defenseButton.onClick.AddListener(() => DefenseClickEvent?.Invoke());
             _supportButton.onClick.AddListener(() => SupportClickEvent?.Invoke());
             _moveButton.onClick.AddListener(() => MoveClickEvent?.Invoke());
+            _rotateButton.onClick.AddListener(() => RotateUnitEvent?.Invoke());
             for (int i = 0; i < _skillButtons.Length; i++)
             {
                 int index = i;

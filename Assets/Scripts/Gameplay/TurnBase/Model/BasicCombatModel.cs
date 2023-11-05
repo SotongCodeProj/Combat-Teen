@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using CombTeen.Gameplay.State;
 using TBS.Core;
 using TBS.Core.Runner;
-using TBS.Core.StateCollection;
 using UnityEngine;
 
 namespace CombTeen.Gameplay.StateModel
@@ -16,9 +14,9 @@ namespace CombTeen.Gameplay.StateModel
 
         public BasicCombatModel(BasicStartBattleState startBattle,
 
-                                PlayerChooseActionState playerChooseAction,
-                                CalculateActionOrderState calculateAction,
-                                PlayUnitActionState playUnitAction,
+                                UnitsActionState playerChooseAction,
+                                // CalculateActionOrderState calculateAction,
+                                // PlayUnitActionState playUnitAction,
                                 CheckBattleStatusState checkBattleStatus,
 
                                 BasicEndBattleState endBattle
@@ -29,8 +27,8 @@ namespace CombTeen.Gameplay.StateModel
 
             _LoopSequence = new List<BaseLoopState>(){
                             playerChooseAction,
-                            calculateAction,
-                            playUnitAction,
+                            // calculateAction,
+                            // playUnitAction,
                             checkBattleStatus};
         }
 

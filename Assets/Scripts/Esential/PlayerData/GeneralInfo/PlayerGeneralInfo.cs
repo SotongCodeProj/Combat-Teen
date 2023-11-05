@@ -1,0 +1,19 @@
+
+namespace CombTeen.Esential.PlayerData.GeneralInfo
+{
+    public interface IPlayerGeneralInfo
+    {
+        public string PlayerName { get; }
+
+    }
+    public class PlayerGeneralInfo : IPlayerGeneralInfo
+    {
+        public string PlayerName { private set; get; }
+        
+        public PlayerGeneralInfo(string playerName)
+        {
+            PlayerName = playerName;
+        }
+
+    }
+}

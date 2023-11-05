@@ -10,7 +10,7 @@ namespace CombTeen.Gameplay.Tile.Object
         
 
     }
-    public abstract class TileObject : ITileObject
+    public abstract class TileObject : MonoBehaviour, ITileObject
     {
 
         public string TileId { private set; get; }

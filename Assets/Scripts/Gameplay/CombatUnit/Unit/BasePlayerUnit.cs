@@ -1,9 +1,5 @@
-using CombTeen.Gameplay.DataTransport.TestData;
-using CombTeen.Gameplay.Tile;
+using CombTeen.Gameplay.DataTransport;
 using CombTeen.Gameplay.Unit.MVC;
-using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 
 namespace CombTeen.Gameplay.Unit
 {
@@ -11,13 +7,7 @@ namespace CombTeen.Gameplay.Unit
     {
         public override string UnitId => "Player";
 
-        [Inject]
-        public void Inject(ITileController tileController)
-        {
-            TileControl = tileController;
-        }
-
-        public override void InitialUnitData(CharacterData Character)
+        public override void InitialUnitData(UnitPlayData.CharacterData Character)
         {
             base.InitialUnitData(Character);
             UnitStatusData.ChangeCombatStatusAction.AfterTakeDamageEvent.AddListener(

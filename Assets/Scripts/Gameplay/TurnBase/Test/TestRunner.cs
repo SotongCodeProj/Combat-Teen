@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CombTeen.Gameplay.DataTransport.TestData;
 using CombTeen.Gameplay.StateRunner;
 using CombTeen.Gameplay.Tile;
@@ -15,6 +16,9 @@ public class TestRunner : MonoBehaviour
 
     private ITileController _tileControl;
 
+    private void Start() {
+        Run();
+    }
 
     [Inject]
     public void Inject(ITileController tileControl)
@@ -24,8 +28,6 @@ public class TestRunner : MonoBehaviour
 
     private IReadOnlyList<BasePlayerUnit> _playerUnits;
     private IReadOnlyList<BaseEnemyUnit> _enemyUnits;
-
-    private bool _keepRun = true;
 
     [Inject]
     public void Inject(BasicCombatRunner runner,
@@ -38,20 +40,20 @@ public class TestRunner : MonoBehaviour
         _runner = runner;
         _playerUnits = playerUnits;
         _enemyUnits = enemyUnits;
-
-        Initial();
     }
-    private void Initial()
+    private async UniTask Initial()
     {
+        var unit = _testData;//BridgeData.Instance.GetCurrentUnitData();
+        await UniTask.WaitUntil(()=> _playerUnits.Count >0 && _enemyUnits.Count>0);
         for (int i = 0; i < _playerUnits.Count; i++)
         {
-            _playerUnits[i].InitialUnitData(_testData.PlayersData[i]);
+            _playerUnits[i].InitialUnitData(unit.Players.ElementAt(i));
             _playerUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
 
         }
         for (int i = 0; i < _enemyUnits.Count; i++)
         {
-            _enemyUnits[i].InitialUnitData(_testData.EnemysData[i]);
+            _enemyUnits[i].InitialUnitData(unit.Enemys.ElementAt(i));
             _enemyUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
         }
     }
@@ -59,16 +61,12 @@ public class TestRunner : MonoBehaviour
 
 
     [Button]
-    private void Run()
+    private async void Run()
     {
+        await Initial();
         _runner.RunAsync().Forget();
     }
 
-    [Button]
-    private void EndCombat()
-    {
-        _keepRun = false;
-    }
     [Button]
     private void RandomCharacterPos()
     {
@@ -80,17 +78,6 @@ public class TestRunner : MonoBehaviour
         for (int i = 0; i < _enemyUnits.Count; i++)
         {
             _enemyUnits[i].SetLocation(_tileControl.Test_GetRandomTile());
-        }
-    }
-    [Button]
-    private void GetUnitsOnTile()
-    {
-        foreach (var item in _tileControl.Test_GetAllTile())
-        {
-            if (item.OccupiedUnit != null)
-            {
-                Debug.Log($"Tile {item.name} have : {item.OccupiedUnit.viewName}");
-            }
         }
     }
 }

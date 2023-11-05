@@ -39,25 +39,25 @@ namespace CombTeen.Gameplay.Unit.Status
 
         public void AddAp(int value)
         {
-            Ap = value;
+            Ap += value;
         }
         public void AddAttack(int value)
         {
-            Attack = value;
+            Attack += value;
         }
         public void AddDefense(int value)
         {
-            Defense = value;
+            Defense += value;
         }
 
-        public void AddHealth(int value)
+        public void AddMaxHealth(int value)
         {
-            Health = value;
+            Health += value;
         }
 
         public void AddSpeed(int value)
         {
-            Speed = value;
+            Speed += value;
         }
         #endregion
     }
@@ -100,8 +100,9 @@ namespace CombTeen.Gameplay.Unit.Status
 
             Attack = ancorStat.Attack;
             Defense = ancorStat.Defense;
-            Health = ancorStat.Health;
             Speed = ancorStat.Speed;
+
+            Health = ancorStat.Health;
             Ap = ancorStat.Ap;
         }
         #region  Modif Action
@@ -126,7 +127,7 @@ namespace CombTeen.Gameplay.Unit.Status
         public UnityEvent<int> AfterTakeDamageEvent { get; }
         public UnityEvent<int> AfterAddHealthEvent { get; }
 
-        void AddHealth(int value);
+        public void AddHealth(int value);
         public void TakeDamage(int value);
     }
 }

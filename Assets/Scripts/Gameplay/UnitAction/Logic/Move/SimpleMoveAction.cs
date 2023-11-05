@@ -1,31 +1,15 @@
-using CombTeen.Gameplay.Tile;
+using System.Linq;
 using CombTeen.Gameplay.Tile.Object;
 using CombTeen.Gameplay.Unit.Action.Helper;
-using CombTeen.Gameplay.Unit.MVC;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
+
 
 namespace CombTeen.Gameplay.Unit.Action.Logic
 {
     public class SimpleMoveAction : BaseMoveAction
     {
-        public override string ActionId => "A-MOV-000";
 
         private ActionTileObject _selectedTile;
-        public override ITileArea ActionArea => new TileArea
-        {
-            Up = 1,
-            Down = 1,
-            Left = 1,
-            Right = 1,
-
-            DownLeft = 1,
-            DownRight = 1,
-            UpLeft = 1,
-            UpRight = 1
-        };
-
-
         protected override UniTask PostState()
         {
             return UniTask.CompletedTask;
@@ -41,18 +25,15 @@ namespace CombTeen.Gameplay.Unit.Action.Logic
             Owner.SetLocation(_selectedTile);
             return UniTask.CompletedTask;
         }
-        public override BaseUnitAction InitializeOwner(CombatUnitControl owner)
+        public override void SetUnitTargets(TargetChooseHelper targetChooseHelper)
         {
-            return new SimpleMoveAction()
+            targetChooseHelper.OnSelectTiles.RemoveAllListeners();
+            targetChooseHelper.OnSelectTiles.AddListener(
+            (selectedTiles) =>
             {
-                Owner = owner
-            };
-        }
-        public override async UniTask SetUnitTargets(TargetChooseHelper targetChooseHelper)
-        {
-            _selectedTile = await targetChooseHelper.GetTileWithoutUnitAsync(Owner);
-            Debug.Log($"Player{Owner.UnitBasicInfoData.UnitName} Move to {_selectedTile.name}");
-            Owner.SetLocation(_selectedTile);
+                _selectedTile = selectedTiles.ElementAt(0);
+            });
+            targetChooseHelper.GetTileWithoutUnit(Owner, TileArea.BasicArea);
         }
     }
 }

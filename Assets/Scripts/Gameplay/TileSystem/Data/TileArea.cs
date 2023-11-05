@@ -1,20 +1,15 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace CombTeen.Gameplay.Tile
-{
-    public interface ITileArea
+{    
+    public class TileArea
     {
-        public int Up { set; get; }
-        public int Down { set; get; }
-        public int Left { set; get; }
-        public int Right { set; get; }
-
-        public int UpRight { get; }
-        public int UpLeft { get; }
-        public int DownRight { get; }
-        public int DownLeft { get; }
-    }
-
-    public class TileArea : ITileArea
-    {
+        public TileArea(IEnumerable<Vector2Int> basicArea)
+        {
+            BasicArea = basicArea;
+        }
+        #region  Delete Later
         public int Up { set; get; }
         public int Down { set; get; }
         public int Left { set; get; }
@@ -25,5 +20,10 @@ namespace CombTeen.Gameplay.Tile
         public int UpLeft { set; get; }
         public int DownRight { set; get; }
         public int DownLeft { set; get; }
+        #endregion
+
+        public IEnumerable<Vector2Int> BasicArea { private set; get; }
+        
+
     }
 }

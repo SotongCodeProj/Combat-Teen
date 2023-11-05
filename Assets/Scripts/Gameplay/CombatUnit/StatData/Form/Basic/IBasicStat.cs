@@ -5,7 +5,7 @@ namespace CombTeen.Gameplay.Unit.Status
     {
         public void AddAttack(int value);
         public void AddDefense(int value);
-        public void AddHealth(int value);
+        public void AddMaxHealth(int value);
         public void AddSpeed(int value);
         public void AddAp(int value);
     }
